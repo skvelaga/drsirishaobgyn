@@ -604,7 +604,7 @@
           <label for="contact">Contact Number *</label>
           <div class="phone-input">
             <span class="phone-prefix">+91</span>
-            <input type="tel" id="contact" placeholder="9876543210" pattern="[0-9]{10}" maxlength="10" required />
+            <input type="tel" id="contactPhone" placeholder="9876543210" pattern="[0-9]{10}" maxlength="10" required />
           </div>
         </div>
         <div class="form-row">
@@ -671,7 +671,7 @@
     const lastName  = document.getElementById('lastName').value.trim();
     const age       = document.getElementById('age').value;
     const gender    = document.getElementById('gender').value;
-    const contact   = '+91' + document.getElementById('contact').value.trim();
+    const contact   = '+91' + document.getElementById('contactPhone').value.trim();
     const date      = document.getElementById('apptDate').value;
     const time      = document.getElementById('apptTime').value;
 

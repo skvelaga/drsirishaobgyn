@@ -349,7 +349,7 @@
           <div class="about-feature">
             <div class="about-feature-icon">🏥</div>
             <div>
-              <h4>Arete Hospitals – Gachibowli</h4>
+              <h4><a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+IKEA,+Mindspace+Road,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">Arete Hospitals – Gachibowli</a></h4>
               <p>Multi-specialty tertiary care center, opposite IKEA, West Hyderabad</p>
             </div>
           </div>
@@ -418,8 +418,8 @@
         <div style="margin-top: 16px; background: var(--gold-light); border: 1px solid var(--gold); border-radius: var(--radius); padding: 20px;">
           <p style="font-size: 14px; color: #7A5520; line-height: 1.6;">
             <strong>📍 Clinic Location:</strong><br/>
-            Arete Hospitals, Opp. IKEA, Mindspace Road,<br/>
-            Gachibowli, Hyderabad – 500 032<br/>
+            <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+IKEA,+Mindspace+Road,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:#7A5520; font-weight:600;">Arete Hospitals, Opp. IKEA, Mindspace Road,<br/>
+            Gachibowli, Hyderabad – 500 032 🗺️</a><br/>
             <strong>🕐 Hours:</strong> Mon–Sat, 9:00 AM – 4:00 PM
           </p>
         </div>
@@ -508,7 +508,8 @@
         </iframe>
         <div style="padding: 16px; background: var(--white);">
           <p style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">📍 <strong>Arete Hospitals</strong>, Opp. IKEA, Mindspace Rd, Gachibowli</p>
-          <p style="font-size: 12px; color: var(--text-light);">Easily accessible from Gachibowli, Kondapur, Madhapur, HITEC City, Nanakramguda &amp; Financial District</p>
+          <p style="font-size: 12px; color: var(--text-light); margin-bottom: 10px;">Easily accessible from Gachibowli, Kondapur, Madhapur, HITEC City, Nanakramguda &amp; Financial District</p>
+          <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+IKEA,+Mindspace+Road,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="display:inline-block; background:var(--maroon); color:#fff; padding:8px 16px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:600;">🗺️ Get Directions</a>
         </div>
       </div>
     </div>
@@ -696,16 +697,10 @@
       'Please confirm my appointment. Thank you!'
     );
     var waUrl = 'https://wa.me/919394580702?text=' + msg;
-    // Use anchor click — avoids popup blocker on form submit
-    var a = document.createElement('a');
-    a.href = waUrl;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
     closeModal();
     document.getElementById('bookingForm').reset();
+    // Direct navigation opens WhatsApp app on mobile without popup-blocker issues
+    window.location.href = waUrl;
   }
 </script>
 

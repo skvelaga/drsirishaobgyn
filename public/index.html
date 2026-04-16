@@ -687,15 +687,23 @@
     // 2. Open WhatsApp with pre-filled patient details
     var msg = encodeURIComponent(
       'Hello Dr. Sirisha,\n\nI would like to book an appointment. Here are my details:\n\n' +
-      '\uD83D\uDC64 Name: ' + firstName + ' ' + lastName + '\n' +
-      '\uD83C\uDF82 Age: ' + age + '\n' +
-      '\u26A7 Gender: ' + gender + '\n' +
-      '\uD83D\uDCDE Contact: ' + contact + '\n' +
-      '\uD83D\uDCC5 Date: ' + date + '\n' +
-      '\uD83D\uDD50 Time: ' + time + '\n\n' +
+      'Name: ' + firstName + ' ' + lastName + '\n' +
+      'Age: ' + age + '\n' +
+      'Gender: ' + gender + '\n' +
+      'Contact: ' + contact + '\n' +
+      'Date: ' + date + '\n' +
+      'Time: ' + time + '\n\n' +
       'Please confirm my appointment. Thank you!'
     );
-    window.open('https://wa.me/919394580702?text=' + msg, '_blank');
+    var waUrl = 'https://wa.me/919394580702?text=' + msg;
+    // Use anchor click — avoids popup blocker on form submit
+    var a = document.createElement('a');
+    a.href = waUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     closeModal();
     document.getElementById('bookingForm').reset();
   }

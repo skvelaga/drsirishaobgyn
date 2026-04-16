@@ -590,15 +590,6 @@
             <label for="age">Age *</label>
             <input type="number" id="age" placeholder="30" min="1" max="120" required />
           </div>
-          <div class="form-group">
-            <label for="gender">Gender *</label>
-            <select id="gender" required>
-              <option value="">Select</option>
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
         </div>
         <div class="form-group">
           <label for="contact">Contact Number *</label>
@@ -614,7 +605,7 @@
           </div>
           <div class="form-group">
             <label for="apptTime">Preferred Time *</label>
-            <select id="apptTime" required>
+            <select id="apptTime" required onchange="clearDateTimeError()" oninput="clearDateTimeError()">
               <option value="">Select time</option>
               <option value="9:00 AM">9:00 AM</option>
               <option value="9:30 AM">9:30 AM</option>
@@ -634,6 +625,7 @@
             </select>
           </div>
         </div>
+        <p id="dateTimeError" style="color:#c0392b; font-size:13px; margin:0 0 10px 0; display:none;">⚠️ Please select a date and time at least 2 hours from now.</p>
         <button type="submit" class="modal-submit">📨 Confirm via WhatsApp</button>
         <p class="modal-note">Your details will be sent to Dr. Sirisha via WhatsApp for confirmation. No online payment required.</p>
       </form>
@@ -649,7 +641,25 @@
   document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('apptDate').setAttribute('min', today);
+    document.getElementById('apptDate').addEventListener('change', clearDateTimeError);
   });
+
+  function clearDateTimeError() {
+    document.getElementById('dateTimeError').style.display = 'none';
+  }
+
+  function parseApptDateTime(dateStr, timeStr) {
+    var parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!parts) return null;
+    var hours = parseInt(parts[1], 10);
+    var minutes = parseInt(parts[2], 10);
+    var period = parts[3].toUpperCase();
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    var dt = new Date(dateStr + 'T00:00:00');
+    dt.setHours(hours, minutes, 0, 0);
+    return dt;
+  }
 
   function openModal() {
     document.getElementById('bookingModal').classList.add('active');
@@ -670,10 +680,17 @@
     const firstName = document.getElementById('firstName').value.trim();
     const lastName  = document.getElementById('lastName').value.trim();
     const age       = document.getElementById('age').value;
-    const gender    = document.getElementById('gender').value;
     const contact   = '+91' + document.getElementById('contactPhone').value.trim();
     const date      = document.getElementById('apptDate').value;
     const time      = document.getElementById('apptTime').value;
+
+    // Validate: appointment must be at least 2 hours in the future
+    var apptDT = parseApptDateTime(date, time);
+    var minDT  = new Date(Date.now() + 2 * 60 * 60 * 1000);
+    if (!apptDT || apptDT < minDT) {
+      document.getElementById('dateTimeError').style.display = 'block';
+      return;
+    }
 
     // 1. Log to Google Sheets (if URL configured)
     if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
@@ -681,7 +698,7 @@
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, age, gender, contact, date, time })
+        body: JSON.stringify({ firstName, lastName, age, contact, date, time })
       }).catch(function(err) { console.log('Sheet log failed silently'); });
     }
 
@@ -690,7 +707,6 @@
       'Hello Dr. Sirisha,\n\nI would like to book an appointment. Here are my details:\n\n' +
       'Name: ' + firstName + ' ' + lastName + '\n' +
       'Age: ' + age + '\n' +
-      'Gender: ' + gender + '\n' +
       'Contact: ' + contact + '\n' +
       'Date: ' + date + '\n' +
       'Time: ' + time + '\n\n' +
@@ -699,7 +715,6 @@
     var waUrl = 'https://wa.me/919394580702?text=' + msg;
     closeModal();
     document.getElementById('bookingForm').reset();
-    // Direct navigation opens WhatsApp app on mobile without popup-blocker issues
     window.open(waUrl, '_blank');
   }
 </script>

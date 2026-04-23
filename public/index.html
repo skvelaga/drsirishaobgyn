@@ -230,6 +230,17 @@
     .footer-list a:hover { color: var(--gold); }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 12px; }
 
+    /* CLINIC SELECTOR */
+    .clinic-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+    .clinic-option { border: 2px solid var(--border); border-radius: 10px; padding: 12px 10px; cursor: pointer; transition: all 0.2s; text-align: center; user-select: none; }
+    .clinic-option:hover { border-color: var(--maroon-mid); background: var(--maroon-light); }
+    .clinic-option.selected { border-color: var(--maroon); background: var(--maroon-light); }
+    .clinic-option input[type="radio"] { display: none; }
+    .clinic-option-emoji { font-size: 20px; margin-bottom: 4px; }
+    .clinic-option-title { font-size: 13px; font-weight: 700; color: var(--maroon); margin-bottom: 2px; }
+    .clinic-option-sub { font-size: 11px; color: var(--text-light); line-height: 1.4; }
+    .clinic-option.selected .clinic-option-sub { color: var(--maroon-mid); }
+
     /* BOOKING MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
@@ -639,12 +650,29 @@
     <div class="modal-header">
       <div>
         <h3>📅 Book an Appointment</h3>
-        <p>Dr. Velaga Sirisha · Arete Hospitals</p>
+        <p id="modalClinicLabel">Dr. Velaga Sirisha · Arete Hospitals, Gachibowli</p>
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
       <form id="bookingForm" onsubmit="submitBooking(event)">
+        <div class="form-group">
+          <label>Choose Clinic *</label>
+          <div class="clinic-selector">
+            <label class="clinic-option selected" id="clinicOptArete" onclick="selectClinic('arete')">
+              <input type="radio" name="clinic" value="arete" checked />
+              <div class="clinic-option-emoji">🌅</div>
+              <div class="clinic-option-title">Morning Clinic</div>
+              <div class="clinic-option-sub">Arete Hospitals, Gachibowli<br/>9:00 AM – 4:00 PM</div>
+            </label>
+            <label class="clinic-option" id="clinicOptSingh" onclick="selectClinic('singh')">
+              <input type="radio" name="clinic" value="singh" />
+              <div class="clinic-option-emoji">🌆</div>
+              <div class="clinic-option-title">Evening Clinic</div>
+              <div class="clinic-option-sub">Singh's Clinic, Kokapet<br/>7:00 PM – 9:00 PM</div>
+            </label>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label for="firstName">First Name *</label>
@@ -677,21 +705,6 @@
             <label for="apptTime">Preferred Time *</label>
             <select id="apptTime" required onchange="clearDateTimeError()" oninput="clearDateTimeError()">
               <option value="">Select time</option>
-              <option value="9:00 AM">9:00 AM</option>
-              <option value="9:30 AM">9:30 AM</option>
-              <option value="10:00 AM">10:00 AM</option>
-              <option value="10:30 AM">10:30 AM</option>
-              <option value="11:00 AM">11:00 AM</option>
-              <option value="11:30 AM">11:30 AM</option>
-              <option value="12:00 PM">12:00 PM</option>
-              <option value="12:30 PM">12:30 PM</option>
-              <option value="1:00 PM">1:00 PM</option>
-              <option value="1:30 PM">1:30 PM</option>
-              <option value="2:00 PM">2:00 PM</option>
-              <option value="2:30 PM">2:30 PM</option>
-              <option value="3:00 PM">3:00 PM</option>
-              <option value="3:30 PM">3:30 PM</option>
-              <option value="4:00 PM">4:00 PM</option>
             </select>
           </div>
         </div>
@@ -704,14 +717,43 @@
 </div>
 
 <script>
-  // ── GOOGLE SHEETS ENDPOINT ──
-  // After completing the Google Sheets setup below, replace this with your Web App URL
   const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+  const CLINIC_TIMES = {
+    arete: ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM',
+            '12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM',
+            '3:00 PM','3:30 PM','4:00 PM'],
+    singh: ['7:00 PM','7:30 PM','8:00 PM','8:30 PM','9:00 PM']
+  };
+
+  const CLINIC_INFO = {
+    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli', name: 'Arete Hospitals, Opp. IKEA, Mindspace Road, Gachibowli' },
+    singh: { label: "Dr. Velaga Sirisha · Singh's Clinic, Kokapet",      name: "Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet" }
+  };
+
+  var selectedClinic = 'arete';
+
+  function selectClinic(clinic) {
+    selectedClinic = clinic;
+    document.getElementById('clinicOptArete').classList.toggle('selected', clinic === 'arete');
+    document.getElementById('clinicOptSingh').classList.toggle('selected', clinic === 'singh');
+    document.getElementById('modalClinicLabel').textContent = CLINIC_INFO[clinic].label;
+
+    var sel = document.getElementById('apptTime');
+    sel.innerHTML = '<option value="">Select time</option>';
+    CLINIC_TIMES[clinic].forEach(function(t) {
+      var opt = document.createElement('option');
+      opt.value = t; opt.textContent = t;
+      sel.appendChild(opt);
+    });
+    clearDateTimeError();
+  }
 
   document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('apptDate').setAttribute('min', today);
     document.getElementById('apptDate').addEventListener('change', clearDateTimeError);
+    selectClinic('arete'); // populate default times
   });
 
   function clearDateTimeError() {
@@ -753,8 +795,8 @@
     const contact   = '+91' + document.getElementById('contactPhone').value.trim();
     const date      = document.getElementById('apptDate').value;
     const time      = document.getElementById('apptTime').value;
+    const clinic    = CLINIC_INFO[selectedClinic].name;
 
-    // Validate: appointment must be at least 2 hours in the future
     var apptDT = parseApptDateTime(date, time);
     var minDT  = new Date(Date.now() + 2 * 60 * 60 * 1000);
     if (!apptDT || apptDT < minDT) {
@@ -762,30 +804,28 @@
       return;
     }
 
-    // 1. Log to Google Sheets (if URL configured)
     if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
       fetch(GOOGLE_SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
+        method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, age, contact, date, time })
-      }).catch(function(err) { console.log('Sheet log failed silently'); });
+        body: JSON.stringify({ firstName, lastName, age, contact, clinic, date, time })
+      }).catch(function() {});
     }
 
-    // 2. Open WhatsApp with pre-filled patient details
     var msg = encodeURIComponent(
       'Hello Dr. Sirisha,\n\nI would like to book an appointment. Here are my details:\n\n' +
-      'Name: ' + firstName + ' ' + lastName + '\n' +
-      'Age: ' + age + '\n' +
+      'Name: '    + firstName + ' ' + lastName + '\n' +
+      'Age: '     + age + '\n' +
       'Contact: ' + contact + '\n' +
-      'Date: ' + date + '\n' +
-      'Time: ' + time + '\n\n' +
+      'Clinic: '  + clinic + '\n' +
+      'Date: '    + date + '\n' +
+      'Time: '    + time + '\n\n' +
       'Please confirm my appointment. Thank you!'
     );
-    var waUrl = 'https://wa.me/919394580702?text=' + msg;
     closeModal();
     document.getElementById('bookingForm').reset();
-    window.open(waUrl, '_blank');
+    selectClinic('arete');
+    window.open('https://wa.me/919394580702?text=' + msg, '_blank');
   }
 </script>
 

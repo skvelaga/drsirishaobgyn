@@ -139,10 +139,11 @@
     .hero-credentials { font-family: 'Newsreader', serif; font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
     .role-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
     .role-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 20px; }
-    .hero-highlights { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
-    .highlight-item { text-align: center; }
-    .highlight-number { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); display: block; }
-    .highlight-label { font-size: 13px; color: rgba(255,255,255,0.75); }
+    .hero-highlights { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .highlight-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+    .highlight-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .highlight-number { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #fff; display: block; line-height: 1.2; }
+    .highlight-label { font-size: 11px; color: rgba(255,255,255,0.72); line-height: 1.3; }
     .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .hero-btn-primary { background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.6); padding: 14px 28px; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s; backdrop-filter: blur(4px); }
     .hero-btn-primary:hover { background: rgba(255,255,255,0.25); }
@@ -161,14 +162,40 @@
     .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--text); margin-bottom: 16px; letter-spacing: -0.01em; }
     .section-desc { font-family: 'Newsreader', serif; font-size: 17px; color: var(--text-light); max-width: 600px; margin-bottom: 48px; line-height: 1.7; }
 
-    /* SPECIALTIES */
+    /* SPECIALTIES — BENTO GRID */
     .specialties { background: var(--white); }
-    .specialty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-    .specialty-card { background: var(--maroon-light); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; transition: transform 0.2s, box-shadow 0.2s; }
-    .specialty-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(107,28,62,0.12); }
+    .bento-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 16px; }
+    .bento-row2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; grid-column: 1 / -1; }
+    .specialty-card { background: #f6f3f2; border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px rgba(74,155,148,0.06); }
+    .specialty-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(74,155,148,0.14); }
+    .specialty-card.featured { background: var(--white); border: 1.5px solid var(--border); grid-column: 1; }
+    .specialty-card.accent { background: var(--maroon); color: #fff; border-color: var(--maroon); }
+    .specialty-card.accent h3 { color: #fff; }
+    .specialty-card.accent p { color: rgba(255,255,255,0.85); }
     .specialty-icon { width: 48px; height: 48px; background: var(--maroon); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+    .specialty-card.accent .specialty-icon { background: rgba(255,255,255,0.2); }
     .specialty-card h3 { font-size: 17px; font-weight: 700; color: var(--maroon); margin-bottom: 8px; }
-    .specialty-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+    .specialty-card p { font-family: 'Newsreader', serif; font-size: 15px; color: var(--text-light); line-height: 1.65; }
+    .specialty-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(74,155,148,0.1); color: var(--maroon); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .specialty-card.accent .specialty-tag { background: rgba(255,255,255,0.2); color: #fff; }
+
+    /* PHILOSOPHY OF CARE */
+    .philosophy { background: var(--white); padding: 72px 24px; }
+    .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .philosophy-card { background: #f6f3f2; border-radius: 20px; padding: 32px 24px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px rgba(74,155,148,0.06); }
+    .philosophy-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(74,155,148,0.12); }
+    .philosophy-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 18px; }
+    .philosophy-card:nth-child(1) .philosophy-icon { background: rgba(0,103,97,0.08); }
+    .philosophy-card:nth-child(2) .philosophy-icon { background: rgba(74,101,73,0.08); }
+    .philosophy-card:nth-child(3) .philosophy-icon { background: rgba(120,82,83,0.08); }
+    .philosophy-card h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .philosophy-card p { font-family: 'Newsreader', serif; font-size: 15px; color: var(--text-light); line-height: 1.7; }
+
+    /* SIRISHA QUOTE */
+    .quote-block { background: #f6f3f2; border-radius: 24px; padding: 48px 48px 40px; position: relative; overflow: hidden; border-left: 4px solid var(--maroon); margin-top: 48px; }
+    .quote-mark { font-family: 'Newsreader', serif; font-size: 120px; line-height: 0.8; color: rgba(0,103,97,0.1); position: absolute; top: 20px; left: 32px; }
+    .quote-text { font-family: 'Newsreader', serif; font-size: 20px; font-style: italic; line-height: 1.75; color: var(--text); position: relative; z-index: 1; margin-bottom: 20px; }
+    .quote-attribution { font-size: 14px; font-weight: 700; color: var(--maroon); }
 
     /* ABOUT */
     .about { background: #f6f3f2; }
@@ -179,7 +206,7 @@
     .about-feature-icon { width: 36px; height: 36px; min-width: 36px; background: var(--maroon); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
     .about-feature h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
     .about-feature p { font-size: 13px; color: var(--text-light); margin: 0; }
-    .qualifications { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .qualifications { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: 0 2px 16px rgba(74,155,148,0.07); }
     .qualifications h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--maroon); }
     .qual-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
     .qual-item:last-child { border-bottom: none; }
@@ -198,7 +225,7 @@
     /* CONTACT */
     .contact { background: var(--maroon-light); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .contact-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .contact-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 2px 16px rgba(74,155,148,0.07); }
     .contact-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--maroon); }
     .contact-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
     .contact-item:last-of-type { border-bottom: none; }
@@ -245,8 +272,19 @@
     /* BOOKING MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.active { display: flex; }
-    .modal { background: var(--white); border-radius: 16px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal { background: var(--white); border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
     .modal-header { background: var(--maroon); color: #fff; padding: 20px 24px; border-radius: 16px 16px 0 0; display: flex; justify-content: space-between; align-items: center; }
+    /* PROGRESS TRACKER */
+    .progress-tracker { display: flex; align-items: center; padding: 20px 24px 0; margin-bottom: -4px; }
+    .progress-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+    .progress-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; transition: all 0.3s; }
+    .progress-circle.active { background: var(--maroon); color: #fff; }
+    .progress-circle.done { background: var(--maroon); color: #fff; }
+    .progress-circle.inactive { background: #e8f5f4; color: var(--text-light); border: 2px solid var(--border); }
+    .progress-label { font-size: 10px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+    .progress-label.active { color: var(--maroon); }
+    .progress-line { flex: 1; height: 2px; background: var(--border); margin: 0 6px; margin-bottom: 16px; }
+    .progress-line.done { background: var(--maroon); }
     .modal-header h3 { font-size: 18px; font-weight: 700; }
     .modal-header p { font-size: 13px; opacity: 0.85; margin-top: 2px; }
     .modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
@@ -282,6 +320,12 @@
       .nav-links { display: none; }
       .top-bar-inner { flex-direction: column; text-align: center; }
       .form-row { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-row2 { grid-template-columns: 1fr; }
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .quote-block { padding: 32px 24px 28px; }
+      .quote-mark { font-size: 80px; }
+      .quote-text { font-size: 17px; }
     }
   </style>
 </head>
@@ -336,20 +380,32 @@
       </div>
       <div class="hero-highlights">
         <div class="highlight-item">
-          <span class="highlight-number">9+</span>
-          <span class="highlight-label">Years Experience</span>
+          <div class="highlight-icon">🏅</div>
+          <div>
+            <span class="highlight-number">9+</span>
+            <span class="highlight-label">Years Experience</span>
+          </div>
         </div>
         <div class="highlight-item">
-          <span class="highlight-number">DNB</span>
-          <span class="highlight-label">Certified</span>
+          <div class="highlight-icon">🎓</div>
+          <div>
+            <span class="highlight-number">DNB</span>
+            <span class="highlight-label">Certified</span>
+          </div>
         </div>
         <div class="highlight-item">
-          <span class="highlight-number">4</span>
-          <span class="highlight-label">Languages</span>
+          <div class="highlight-icon">🔬</div>
+          <div>
+            <span class="highlight-number">2x</span>
+            <span class="highlight-label">Fellowship</span>
+          </div>
         </div>
         <div class="highlight-item">
-          <span class="highlight-number" style="font-size:18px; line-height:1.3;">Dual<br>Fellowship</span>
-          <span class="highlight-label">Lap & Urogynecology</span>
+          <div class="highlight-icon">🗣️</div>
+          <div>
+            <span class="highlight-number">4</span>
+            <span class="highlight-label">Languages</span>
+          </div>
         </div>
       </div>
       <div class="hero-actions">
@@ -373,31 +429,37 @@
     <div class="section-tag">Expertise</div>
     <h2 class="section-title">Areas of Speciality</h2>
     <p class="section-desc">Comprehensive women's health care with advanced minimally invasive techniques and personalized treatment plans.</p>
-    <div class="specialty-grid">
-      <div class="specialty-card">
+    <div class="bento-grid">
+      <!-- Featured: Laparoscopic Surgery -->
+      <div class="specialty-card featured">
+        <div class="specialty-tag">★ Primary Expertise</div>
         <div class="specialty-icon">🔬</div>
         <h3>Laparoscopic Surgery</h3>
-        <p>Advanced minimally invasive procedures — laparoscopic hysterectomy, myomectomy, cystectomy, and diagnostic laparoscopy with faster recovery.</p>
+        <p>Advanced minimally invasive procedures — laparoscopic hysterectomy, myomectomy, cystectomy, and diagnostic laparoscopy. DNB-certified with dual fellowship in Advanced Laparoscopic Surgery, delivering faster recovery and minimal scarring.</p>
       </div>
+      <!-- Urogynecology -->
       <div class="specialty-card">
         <div class="specialty-icon">🩺</div>
         <h3>Urogynecology</h3>
-        <p>Expert management of pelvic floor disorders including prolapse repair, urinary incontinence, and reconstructive pelvic surgery.</p>
+        <p>Expert management of pelvic floor disorders including prolapse repair, urinary incontinence, and reconstructive pelvic surgery. Fellowship-trained specialist.</p>
       </div>
-      <div class="specialty-card">
-        <div class="specialty-icon">🌸</div>
-        <h3>Obstetrics & High-Risk Pregnancy</h3>
-        <p>Complete antenatal, intrapartum, and postnatal care including normal deliveries, C-sections, and high-risk pregnancy management.</p>
-      </div>
-<div class="specialty-card">
-        <div class="specialty-icon">💊</div>
-        <h3>Reproductive Medicine</h3>
-        <p>Infertility workup, PCOS management, endometriosis treatment, and hormonal disorder management for improved reproductive health.</p>
-      </div>
-      <div class="specialty-card">
-        <div class="specialty-icon">🏃‍♀️</div>
-        <h3>Women's Wellness</h3>
-        <p>Preventive gynecology, menopause management, adolescent health, contraception counseling, and annual well-woman exams.</p>
+      <!-- Row 2 -->
+      <div class="bento-row2">
+        <div class="specialty-card">
+          <div class="specialty-icon">🌸</div>
+          <h3>Obstetrics & High-Risk Pregnancy</h3>
+          <p>Complete antenatal, intrapartum, and postnatal care including normal deliveries, C-sections, and high-risk pregnancy management.</p>
+        </div>
+        <div class="specialty-card accent">
+          <div class="specialty-icon">💊</div>
+          <h3>Reproductive Medicine</h3>
+          <p>Infertility workup, PCOS management, endometriosis treatment, and hormonal disorder management for improved reproductive health.</p>
+        </div>
+        <div class="specialty-card">
+          <div class="specialty-icon">🏃‍♀️</div>
+          <h3>Women's Wellness</h3>
+          <p>Preventive gynecology, menopause management, adolescent health, contraception counseling, and annual well-woman exams.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -476,6 +538,44 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY OF CARE + QUOTE -->
+<section class="philosophy">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <div class="section-tag">Approach</div>
+      <h2 class="section-title">Philosophy of Care</h2>
+      <div style="width:48px; height:3px; background:var(--maroon); border-radius:2px; margin:0 auto 8px;"></div>
+      <p class="section-desc" style="margin:16px auto 0; text-align:center;">Every woman deserves medical care that is both clinically rigorous and deeply human.</p>
+    </div>
+    <div class="philosophy-grid">
+      <div class="philosophy-card">
+        <div class="philosophy-icon">🤝</div>
+        <h3>Patient-First</h3>
+        <p>Every woman's journey is unique. Dr. Sirisha listens first — treating the individual behind the symptoms with dignity and deep respect, in the language you're most comfortable in.</p>
+      </div>
+      <div class="philosophy-card">
+        <div class="philosophy-icon">🔬</div>
+        <h3>Evidence-Based Precision</h3>
+        <p>DNB-certified and fellowship-trained, Dr. Sirisha applies the latest minimally invasive techniques — ensuring accurate diagnosis and treatment with faster recovery times.</p>
+      </div>
+      <div class="philosophy-card">
+        <div class="philosophy-icon">💡</div>
+        <h3>Informed Empowerment</h3>
+        <p>Knowledge is the foundation of good decisions. Complex conditions are always explained in clear, simple terms so you can be a confident partner in your own healthcare.</p>
+      </div>
+    </div>
+
+    <!-- Quote Block -->
+    <div class="quote-block">
+      <div class="quote-mark">"</div>
+      <p class="quote-text">
+        Medicine is not just about prescriptions and procedures — it is about human connection. In obstetrics and gynaecology, we are privileged to be present at life's most vulnerable and joyous moments. My goal is to ensure every woman feels truly heard, safe, and in expert hands.
+      </p>
+      <div class="quote-attribution">— Dr. Velaga Sirisha, MBBS · DGO · DNB</div>
     </div>
   </div>
 </section>
@@ -654,6 +754,24 @@
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
+    <!-- PROGRESS TRACKER -->
+    <div class="progress-tracker">
+      <div class="progress-step">
+        <div class="progress-circle active">1</div>
+        <div class="progress-label active">Clinic</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="progress-circle inactive">2</div>
+        <div class="progress-label">Date & Time</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="progress-circle inactive">3</div>
+        <div class="progress-label">Confirm</div>
+      </div>
+    </div>
+
     <div class="modal-body">
       <form id="bookingForm" onsubmit="submitBooking(event)">
         <div class="form-group">
@@ -749,10 +867,32 @@
     clearDateTimeError();
   }
 
+  // Progress tracker step update
+  function updateProgress(step) {
+    var circles = document.querySelectorAll('.progress-circle');
+    var labels = document.querySelectorAll('.progress-label');
+    var lines = document.querySelectorAll('.progress-line');
+    circles.forEach(function(c, i) {
+      c.className = 'progress-circle ' + (i < step ? 'done' : i === step ? 'active' : 'inactive');
+    });
+    labels.forEach(function(l, i) {
+      l.className = 'progress-label' + (i === step ? ' active' : '');
+    });
+    lines.forEach(function(l, i) {
+      l.className = 'progress-line' + (i < step ? ' done' : '');
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('apptDate').setAttribute('min', today);
-    document.getElementById('apptDate').addEventListener('change', clearDateTimeError);
+    document.getElementById('apptDate').addEventListener('change', function() {
+      clearDateTimeError();
+      if (this.value) updateProgress(1);
+    });
+    document.getElementById('apptTime').addEventListener('change', function() {
+      if (this.value) updateProgress(2);
+    });
     selectClinic('arete'); // populate default times
   });
 

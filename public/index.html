@@ -42,11 +42,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png?v=4" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=4" />
-  <meta name="theme-color" content="#006761" />
+  <meta name="theme-color" content="#004d48" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -98,446 +98,922 @@
   </script>
 
   <style>
+    /* ── DESIGN TOKENS ── */
     :root {
-      --maroon: #006761;
-      --maroon-mid: #2c817a;
-      --maroon-light: #e8f5f4;
-      --gold: #4A9B94;
-      --gold-light: #ccebc7;
-      --text: #1b1c1c;
-      --text-light: #3e4947;
-      --white: #FFFFFF;
-      --border: #bec9c7;
-      --radius: 8px;
+      --primary:           #004d48;
+      --primary-container: #006761;
+      --primary-mid:       #2c817a;
+      --primary-light:     #e8f5f4;
+      --gold:              #ffdea5;
+      --gold-mid:          #e9c176;
+      --gold-dark:         #5d4201;
+      --gold-amber:        #775a19;
+      --surface:           #fbf9f8;
+      --surface-low:       #f5f3f3;
+      --on-surface:        #1b1c1c;
+      --on-surface-var:    #3e4947;
+      --outline:           #6e7977;
+      --outline-var:       #bec9c7;
+      --white:             #ffffff;
+      --container:         1280px;
+      --r-sm:   8px;
+      --r-md:  12px;
+      --r-lg:  16px;
+      --r-xl:  24px;
+      --r-full:9999px;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); background: #fbf9f8; line-height: 1.6; }
 
-    /* TOP BAR */
-    .top-bar { background: var(--maroon); color: rgba(255,255,255,0.9); font-size: 13px; padding: 8px 0; }
-    .top-bar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
-    .top-bar a { color: inherit; text-decoration: none; }
-    .top-bar a:hover { color: var(--gold); }
+    /* ── RESET ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--on-surface);
+      background: var(--surface);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    img { display: block; }
 
-    /* NAVBAR */
-    nav { background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(107,28,62,0.07); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-brand-text { font-size: 18px; font-weight: 700; color: var(--maroon); line-height: 1.2; }
-    .nav-brand-sub { font-size: 12px; color: var(--text-light); font-weight: 400; }
-    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 8px; transition: background 0.2s, color 0.2s; }
-    .nav-links a:hover { background: var(--maroon-light); color: var(--maroon); }
-    .btn-primary { background: var(--maroon) !important; color: #fff !important; border-radius: 8px; padding: 10px 20px !important; font-weight: 600 !important; }
-    .btn-primary:hover { background: var(--maroon-mid) !important; }
+    /* ── NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(190,201,199,0.35);
+      box-shadow: 0 2px 24px rgba(0,77,72,0.05);
+    }
+    .nav-inner {
+      max-width: var(--container); margin: 0 auto;
+      padding: 0 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav-brand {
+      font-family: 'Newsreader', serif;
+      font-size: 21px; font-weight: 600;
+      color: var(--primary); text-decoration: none; line-height: 1.2;
+    }
+    .nav-brand-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; color: var(--on-surface-var); font-weight: 400;
+      display: block; margin-top: 2px;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 17px; color: var(--on-surface-var);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--gold); color: var(--gold-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+      padding: 11px 26px; border-radius: var(--r-full);
+      border: none; cursor: pointer;
+      box-shadow: 0 2px 12px rgba(255,222,165,0.4);
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-mid); }
 
-    /* HERO */
-    .hero { background: linear-gradient(135deg, #004d48 0%, #006761 50%, #003d39 100%); padding: 64px 24px; color: var(--white); }
-    .hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: center; }
-    .hero-badge { display: inline-block; background: rgba(201,151,58,0.2); border: 1px solid var(--gold); color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; }
-    .hero h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
-    .hero-credentials { font-family: 'Newsreader', serif; font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
-    .role-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .role-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 20px; }
-    .hero-highlights { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
-    .highlight-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
-    .highlight-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-    .highlight-number { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #fff; display: block; line-height: 1.2; }
-    .highlight-label { font-size: 11px; color: rgba(255,255,255,0.72); line-height: 1.3; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-btn-primary { background: #fff; color: var(--maroon); border: 2px solid #fff; padding: 14px 28px; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-    .hero-btn-primary:hover { background: #f0fffe; box-shadow: 0 6px 24px rgba(0,0,0,0.2); }
-    .hero-btn-secondary { background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.7); padding: 13px 28px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, border-color 0.2s; backdrop-filter: blur(4px); }
-    .hero-btn-secondary:hover { background: rgba(255,255,255,0.25); border-color: #fff; }
-    .hero-photo-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; overflow: hidden; text-align: center; }
-    .hero-photo-card img { width: 100%; height: 360px; object-fit: cover; object-position: top center; display: block; }
-    .hero-photo-info { padding: 16px; background: rgba(0,0,0,0.2); }
-    .hero-photo-info p { font-size: 13px; color: rgba(255,255,255,0.85); }
-    .hero-photo-info strong { color: var(--gold); display: block; font-size: 15px; margin-bottom: 2px; }
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 870px;
+      display: flex; align-items: center; overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      filter: brightness(0.88);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        var(--surface) 0%,
+        var(--surface) 20%,
+        rgba(251,249,248,0.75) 46%,
+        rgba(251,249,248,0.2) 70%,
+        transparent 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      max-width: var(--container); margin: 0 auto;
+      padding: 96px 36px; width: 100%;
+    }
+    .hero-inner { max-width: 600px; }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--primary); background: rgba(0,77,72,0.09);
+      padding: 5px 16px; border-radius: var(--r-full);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(34px, 4.5vw, 54px);
+      font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+      color: var(--primary); margin-bottom: 16px;
+    }
+    .hero-credentials {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 16px; color: var(--primary-mid); margin-bottom: 18px;
+    }
+    .hero-sub {
+      font-size: 17px; line-height: 1.75; color: var(--on-surface-var);
+      margin-bottom: 36px; max-width: 490px;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .btn-gold {
+      background: var(--gold); color: var(--gold-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
+      padding: 15px 36px; border-radius: var(--r-full); border: none;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      box-shadow: 0 4px 20px rgba(255,222,165,0.45);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-mid); box-shadow: 0 6px 28px rgba(255,222,165,0.55); }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: var(--primary); text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .hero-link:hover { gap: 10px; }
 
-    /* SECTIONS */
-    section { padding: 72px 24px; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #fff; background: var(--maroon); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--text); margin-bottom: 16px; letter-spacing: -0.01em; }
-    .section-desc { font-family: 'Newsreader', serif; font-size: 17px; color: var(--text-light); max-width: 600px; margin-bottom: 48px; line-height: 1.7; }
+    /* ── TRUST BAR ── */
+    .trust-bar { background: var(--surface-low); padding: 52px 36px; }
+    .trust-bar-inner { max-width: var(--container); margin: 0 auto; }
+    .trust-bar-label {
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--outline);
+      margin-bottom: 32px;
+    }
+    .trust-items {
+      display: flex; justify-content: center; align-items: center;
+      gap: 52px; flex-wrap: wrap;
+      opacity: 0.65; transition: opacity 0.4s;
+    }
+    .trust-items:hover { opacity: 1; }
+    .trust-item { display: flex; align-items: center; gap: 11px; }
+    .trust-icon { font-size: 26px; }
+    .trust-text {
+      font-family: 'Newsreader', serif; font-size: 15px;
+      font-weight: 600; color: var(--on-surface); white-space: nowrap;
+    }
 
-    /* SPECIALTIES — BENTO GRID */
-    .specialties { background: var(--white); }
-    .bento-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 16px; }
-    .bento-row2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; grid-column: 1 / -1; }
-    .specialty-card { background: #f6f3f2; border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px rgba(74,155,148,0.06); }
-    .specialty-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(74,155,148,0.14); }
-    .specialty-card.featured { background: var(--white); border: 1.5px solid var(--border); grid-column: 1; }
-    .specialty-card.accent { background: var(--maroon); color: #fff; border-color: var(--maroon); }
-    .specialty-card.accent h3 { color: #fff; }
-    .specialty-card.accent p { color: rgba(255,255,255,0.85); }
-    .specialty-icon { width: 48px; height: 48px; background: var(--maroon); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
-    .specialty-card.accent .specialty-icon { background: rgba(255,255,255,0.2); }
-    .specialty-card h3 { font-size: 17px; font-weight: 700; color: var(--maroon); margin-bottom: 8px; }
-    .specialty-card p { font-family: 'Newsreader', serif; font-size: 15px; color: var(--text-light); line-height: 1.65; }
-    .specialty-tag { display: inline-flex; align-items: center; gap: 5px; background: var(--maroon); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.5px; }
-    .specialty-card.accent .specialty-tag { background: rgba(255,255,255,0.25); color: #fff; }
+    /* ── SHARED SECTION HELPERS ── */
+    .sec { padding: 120px 36px; }
+    .sec-inner { max-width: var(--container); margin: 0 auto; }
+    .sec-tag {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #fff;
+      background: var(--primary); padding: 5px 14px;
+      border-radius: var(--r-full); margin-bottom: 14px;
+    }
+    .sec-title {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(28px, 3vw, 40px); font-weight: 500;
+      color: var(--primary); line-height: 1.28;
+    }
+    .sec-desc {
+      font-size: 17px; line-height: 1.7; color: var(--on-surface-var);
+      max-width: 600px; margin-top: 14px;
+    }
 
-    /* PHILOSOPHY OF CARE */
-    .philosophy { background: var(--white); padding: 72px 24px; }
-    .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-    .philosophy-card { background: #f6f3f2; border-radius: 20px; padding: 32px 24px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px rgba(74,155,148,0.06); }
-    .philosophy-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(74,155,148,0.12); }
-    .philosophy-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 18px; }
-    .philosophy-card:nth-child(1) .philosophy-icon { background: rgba(0,103,97,0.08); }
-    .philosophy-card:nth-child(2) .philosophy-icon { background: rgba(74,101,73,0.08); }
-    .philosophy-card:nth-child(3) .philosophy-icon { background: rgba(120,82,83,0.08); }
-    .philosophy-card h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
-    .philosophy-card p { font-family: 'Newsreader', serif; font-size: 15px; color: var(--text-light); line-height: 1.7; }
+    /* ── WHY / ABOUT ── */
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .why-photo-wrap { position: relative; }
+    .why-photo-offset {
+      position: absolute; top: -20px; left: -20px;
+      width: 100%; height: 100%;
+      background: rgba(255,222,165,0.22); border-radius: var(--r-lg);
+    }
+    .why-photo-wrap img {
+      position: relative; z-index: 1;
+      width: 100%; height: 580px;
+      object-fit: cover; object-position: top center;
+      border-radius: var(--r-lg);
+      box-shadow: 0 20px 60px rgba(0,77,72,0.16);
+    }
+    .why-eyebrow {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--primary);
+      background: rgba(0,77,72,0.08); padding: 5px 14px;
+      border-radius: var(--r-full); margin-bottom: 20px;
+    }
+    .why-content h2 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(26px, 2.8vw, 38px); font-weight: 500;
+      color: var(--primary); line-height: 1.3; margin-bottom: 22px;
+    }
+    .why-content p {
+      font-size: 16px; line-height: 1.8; color: var(--on-surface-var);
+      margin-bottom: 16px;
+    }
+    .why-bullets {
+      list-style: none; margin-top: 28px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .why-bullet { display: flex; align-items: flex-start; gap: 14px; }
+    .why-star { color: var(--gold-amber); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .why-bullet-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 600; color: var(--primary);
+    }
 
-    /* SIRISHA QUOTE */
-    .quote-block { background: #f6f3f2; border-radius: 24px; padding: 48px 48px 40px; position: relative; overflow: hidden; border-left: 4px solid var(--maroon); margin-top: 48px; }
-    .quote-mark { font-family: 'Newsreader', serif; font-size: 120px; line-height: 0.8; color: rgba(0,103,97,0.1); position: absolute; top: 20px; left: 32px; }
-    .quote-text { font-family: 'Newsreader', serif; font-size: 20px; font-style: italic; line-height: 1.75; color: var(--text); position: relative; z-index: 1; margin-bottom: 20px; }
-    .quote-attribution { font-size: 14px; font-weight: 700; color: var(--maroon); }
+    /* ── CARE JOURNEYS ── */
+    .care-sec { background: #E8F5F4; padding: 120px 36px; }
+    .care-header { text-align: center; margin-bottom: 52px; }
+    .care-header h2 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(30px, 3.5vw, 44px); font-weight: 500;
+      color: var(--primary); margin-bottom: 14px; line-height: 1.25;
+    }
+    .care-header p {
+      font-size: 17px; color: var(--on-surface-var);
+      max-width: 540px; margin: 0 auto; line-height: 1.7;
+    }
+    .care-cards {
+      max-width: var(--container); margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .care-card {
+      background: var(--white); border-radius: var(--r-lg); overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,77,72,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .care-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,77,72,0.13); }
+    .care-img {
+      height: 240px; overflow: hidden;
+      background: linear-gradient(135deg, #c0e8e4 0%, #84d5cd 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .care-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .care-card:hover .care-img img { transform: scale(1.06); }
+    .care-img-icon { font-size: 64px; }
+    .care-body { padding: 28px 28px 32px; }
+    .care-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--gold-amber);
+      margin-bottom: 10px; display: block;
+    }
+    .care-card h3 {
+      font-family: 'Newsreader', serif;
+      font-size: 22px; font-weight: 500; color: var(--primary);
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .care-card p {
+      font-size: 14px; line-height: 1.7; color: var(--on-surface-var);
+      margin-bottom: 18px;
+    }
+    .care-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px; font-weight: 700; color: var(--primary);
+      text-decoration: none; background: none; border: none;
+      cursor: pointer; transition: gap 0.2s;
+    }
+    .care-link:hover { gap: 10px; }
 
-    /* ABOUT */
-    .about { background: #f6f3f2; }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-    .about-text p { font-family: 'Newsreader', serif; color: var(--text-light); margin-bottom: 16px; font-size: 16px; line-height: 1.8; }
-    .about-features { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
-    .about-feature { display: flex; gap: 12px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-    .about-feature-icon { width: 36px; height: 36px; min-width: 36px; background: var(--maroon); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-    .about-feature h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-    .about-feature p { font-size: 13px; color: var(--text-light); margin: 0; }
-    .qualifications { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: 0 2px 16px rgba(74,155,148,0.07); }
-    .qualifications h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--maroon); }
-    .qual-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    /* ── DR'S QUOTE ── */
+    .quote-sec { padding: 120px 36px; }
+    .quote-inner { max-width: 880px; margin: 0 auto; text-align: center; }
+    .quote-mark {
+      font-family: 'Newsreader', serif;
+      font-size: 96px; line-height: 0.7;
+      color: var(--gold-amber); display: block; margin-bottom: 28px;
+    }
+    blockquote.quote-text {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: clamp(20px, 2.6vw, 30px); font-weight: 400;
+      line-height: 1.6; color: var(--primary); margin-bottom: 40px;
+    }
+    .quote-cite-name {
+      font-family: 'Newsreader', serif;
+      font-size: 19px; font-weight: 500; color: var(--on-surface);
+      display: block;
+    }
+    .quote-cite-role {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--outline);
+      display: block; margin-top: 6px;
+    }
+
+    /* ── CTA CARD ── */
+    .cta-outer { padding: 64px 36px; }
+    .cta-card {
+      max-width: 1100px; margin: 0 auto;
+      background: var(--primary); border-radius: 32px;
+      padding: 80px 64px; position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .cta-skew {
+      position: absolute; top: 0; right: -8%;
+      width: 36%; height: 100%;
+      background: rgba(255,222,165,0.08);
+      transform: skewX(-12deg);
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-card h2 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(26px, 3.5vw, 44px); font-weight: 500;
+      color: #fff; margin-bottom: 18px; line-height: 1.25;
+    }
+    .cta-card p {
+      font-size: 16px; line-height: 1.7;
+      color: rgba(255,255,255,0.75); margin-bottom: 40px;
+      max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .btn-gold-lg {
+      background: var(--gold); color: var(--gold-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.04em;
+      padding: 18px 52px; border-radius: var(--r-full);
+      border: none; cursor: pointer;
+      box-shadow: 0 6px 28px rgba(255,222,165,0.32);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-gold-lg:hover { background: var(--gold-mid); box-shadow: 0 8px 36px rgba(255,222,165,0.46); }
+
+    /* ── QUALIFICATIONS ── */
+    .quals-sec { background: var(--surface-low); padding: 120px 36px; }
+    .quals-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: start;
+    }
+    .quals-left h2 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(26px, 2.8vw, 38px); font-weight: 500;
+      color: var(--primary); line-height: 1.3; margin-bottom: 20px;
+      margin-top: 14px;
+    }
+    .quals-left p {
+      font-size: 16px; line-height: 1.8; color: var(--on-surface-var);
+      margin-bottom: 16px;
+    }
+    .lang-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; align-items: center; }
+    .lang-label { font-size: 13px; font-weight: 600; color: var(--on-surface-var); }
+    .lang-tag {
+      background: var(--primary); color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 5px 14px; border-radius: var(--r-full);
+    }
+    .quals-card {
+      background: var(--white); border-radius: var(--r-lg);
+      padding: 36px; box-shadow: 0 4px 24px rgba(0,77,72,0.07);
+    }
+    .quals-card-title {
+      font-family: 'Newsreader', serif;
+      font-size: 22px; font-weight: 500; color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .qual-item {
+      display: flex; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid var(--outline-var);
+    }
     .qual-item:last-child { border-bottom: none; }
-    .qual-dot { width: 8px; height: 8px; min-width: 8px; background: var(--gold); border-radius: 50%; margin-top: 6px; }
-    .qual-item strong { display: block; font-size: 14px; font-weight: 700; }
-    .qual-item span { font-size: 13px; color: var(--text-light); }
-    .lang-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .lang-tag { background: var(--maroon); border: 1px solid var(--maroon); color: #fff; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
+    .qual-dot {
+      width: 8px; height: 8px; min-width: 8px;
+      background: var(--gold-mid); border-radius: 50%; margin-top: 7px;
+    }
+    .qual-item strong {
+      display: block; font-size: 14px; font-weight: 700;
+      color: var(--on-surface); margin-bottom: 3px;
+    }
+    .qual-item span { font-size: 13px; color: var(--on-surface-var); }
 
-    /* CONDITIONS */
-    .conditions { background: var(--white); }
-    .conditions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-    .condition-item { background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--maroon); border-radius: 8px; padding: 12px 16px; font-size: 14px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 6px rgba(74,155,148,0.06); transition: box-shadow 0.2s; }
-    .condition-item:hover { box-shadow: 0 4px 16px rgba(74,155,148,0.12); }
-    .condition-item::before { content: '✓'; font-size: 12px; font-weight: 700; color: var(--maroon); flex-shrink: 0; }
+    /* ── CONDITIONS ── */
+    .cond-sec { padding: 120px 36px; }
+    .cond-header { margin-bottom: 44px; }
+    .conditions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    .condition-item {
+      background: var(--white);
+      border: 1px solid var(--outline-var);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--r-sm); padding: 11px 15px;
+      font-size: 14px; font-weight: 500; color: var(--on-surface);
+      display: flex; align-items: center; gap: 8px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .condition-item:hover { box-shadow: 0 4px 16px rgba(0,77,72,0.1); transform: translateY(-1px); }
+    .condition-item::before {
+      content: '✓'; font-size: 11px; font-weight: 700;
+      color: var(--primary); flex-shrink: 0;
+    }
 
-    /* CONTACT */
-    .contact { background: var(--maroon-light); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .contact-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 2px 16px rgba(74,155,148,0.07); }
-    .contact-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--maroon); }
-    .contact-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
-    .contact-item:last-of-type { border-bottom: none; }
-    .contact-icon { width: 36px; height: 36px; background: var(--maroon-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    .contact-label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
-    .contact-value { font-size: 14px; font-weight: 600; }
-    .contact-value a { color: var(--maroon); text-decoration: none; }
-    .map-placeholder { background: var(--maroon-light); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .map-placeholder iframe { width: 100%; height: 280px; border: none; display: block; }
-    .book-card-cta { background: var(--maroon); border-radius: var(--radius); padding: 28px; color: #fff; text-align: center; }
-    .book-card-cta h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .book-card-cta p { font-size: 14px; opacity: 0.85; margin-bottom: 20px; }
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      padding: 32px 36px; text-align: center;
+      background: #E8F5F4;
+      border-top: 1px solid var(--outline-var);
+      border-bottom: 1px solid var(--outline-var);
+    }
+    .cta-strip p { font-size: 15px; color: var(--on-surface); margin-bottom: 16px; }
+    .cta-strip-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-strip-btn {
+      background: var(--primary); color: #fff;
+      border: 2px solid var(--primary); padding: 11px 24px;
+      border-radius: var(--r-full); font-size: 14px; font-weight: 700;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: background 0.2s;
+    }
+    .cta-strip-btn:hover { background: var(--primary-container); border-color: var(--primary-container); }
+    .cta-strip-btn-outline {
+      background: #fff; color: var(--primary);
+      border: 2px solid var(--primary); padding: 9px 22px;
+      border-radius: var(--r-full); font-size: 14px; font-weight: 700;
+      text-decoration: none; display: inline-block; transition: background 0.2s;
+    }
+    .cta-strip-btn-outline:hover { background: var(--primary-light); }
 
-    /* CTA BANNER */
-    .cta-banner { background: linear-gradient(135deg, #004d48 0%, #006761 50%, #003d39 100%); padding: 64px 24px; text-align: center; color: #fff; }
-    .cta-banner h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 16px; }
-    .cta-banner p { font-family: 'Newsreader', serif; font-size: 17px; opacity: 0.85; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
-    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    /* ── CONTACT ── */
+    .contact-sec { background: var(--surface-low); padding: 120px 36px; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-top: 52px;
+    }
+    .contact-left { display: flex; flex-direction: column; gap: 16px; }
+    .contact-card {
+      background: var(--white); border: 1px solid var(--outline-var);
+      border-radius: var(--r-lg); padding: 28px;
+      box-shadow: 0 4px 20px rgba(0,77,72,0.06);
+    }
+    .contact-card-title {
+      font-family: 'Newsreader', serif;
+      font-size: 20px; font-weight: 500; color: var(--primary);
+      margin-bottom: 20px;
+    }
+    .clinic-block { padding: 14px 0; border-bottom: 1px solid var(--outline-var); }
+    .clinic-block:last-child { border-bottom: none; }
+    .clinic-block-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--primary); margin-bottom: 12px;
+    }
+    .clinic-row { display: flex; gap: 10px; align-items: flex-start; padding: 5px 0; }
+    .clinic-icon {
+      width: 30px; height: 30px; min-width: 30px;
+      background: var(--primary-light); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+    .clinic-row-label {
+      font-size: 10px; color: var(--outline);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;
+    }
+    .clinic-row-value { font-size: 13px; font-weight: 600; color: var(--on-surface); }
+    .clinic-row-value a { color: var(--primary); text-decoration: none; }
+    .clinic-row-value a:hover { text-decoration: underline; }
+    .book-cta-card {
+      background: var(--primary); border-radius: var(--r-lg);
+      padding: 28px; color: #fff; text-align: center;
+    }
+    .book-cta-card h3 {
+      font-family: 'Newsreader', serif; font-size: 20px; font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .book-cta-card p { font-size: 14px; opacity: 0.82; margin-bottom: 20px; line-height: 1.6; }
+    .btn-white {
+      display: block; width: 100%; background: #fff; color: var(--primary);
+      font-size: 14px; font-weight: 700; padding: 13px; border-radius: var(--r-sm);
+      border: none; cursor: pointer; text-decoration: none; text-align: center;
+      transition: background 0.2s, color 0.2s; margin-bottom: 10px;
+    }
+    .btn-white:hover { background: var(--gold); color: var(--gold-dark); }
+    .btn-white-outline {
+      display: block; width: 100%;
+      background: rgba(255,255,255,0.14); color: #fff;
+      border: 2px solid rgba(255,255,255,0.55);
+      font-size: 14px; font-weight: 600; padding: 11px; border-radius: var(--r-sm);
+      text-decoration: none; text-align: center; transition: background 0.2s;
+    }
+    .btn-white-outline:hover { background: rgba(255,255,255,0.24); }
+    .contact-right { display: flex; flex-direction: column; gap: 16px; }
+    .map-block {
+      border-radius: var(--r-lg); overflow: hidden;
+      border: 1px solid var(--outline-var);
+    }
+    .map-block iframe { width: 100%; height: 260px; border: none; display: block; }
+    .map-caption { padding: 16px 20px; background: var(--white); border-top: 1px solid var(--outline-var); }
+    .map-caption p { font-size: 13px; color: var(--on-surface-var); margin-bottom: 6px; }
+    .map-caption a { color: inherit; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+    .map-dir-btn {
+      display: inline-block; background: var(--primary); color: #fff;
+      padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .map-dir-btn:hover { background: var(--primary-container); }
 
-    /* FOOTER */
-    footer { background: #003d39; color: rgba(255,255,255,0.7); padding: 48px 24px 24px; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .footer-tagline { font-size: 13px; line-height: 1.6; }
-    .footer-heading { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1.5px; }
+    /* ── FOOTER ── */
+    footer { background: #003d39; color: rgba(255,255,255,0.7); padding: 64px 36px 28px; }
+    .footer-inner { max-width: var(--container); margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand {
+      font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600;
+      color: #fff; margin-bottom: 10px;
+    }
+    .footer-tagline { font-size: 13px; line-height: 1.75; }
+    .footer-tagline a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-heading {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #fff; margin-bottom: 16px;
+    }
     .footer-list { list-style: none; }
-    .footer-list li { padding: 4px 0; font-size: 13px; }
-    .footer-list a { color: rgba(255,255,255,0.65); text-decoration: none; }
+    .footer-list li { padding: 5px 0; font-size: 13px; }
+    .footer-list a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
     .footer-list a:hover { color: var(--gold); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 12px; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 22px; text-align: center; font-size: 12px;
+    }
 
-    /* CLINIC SELECTOR */
+    /* ── BOOKING MODAL ── */
     .clinic-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
-    .clinic-option { border: 2px solid var(--border); border-radius: 10px; padding: 12px 10px; cursor: pointer; transition: all 0.2s; text-align: center; user-select: none; }
-    .clinic-option:hover { border-color: var(--maroon-mid); background: var(--maroon-light); }
-    .clinic-option.selected { border-color: var(--maroon); background: var(--maroon-light); }
+    .clinic-option {
+      border: 2px solid var(--outline-var); border-radius: var(--r-sm);
+      padding: 12px 10px; cursor: pointer; transition: all 0.2s;
+      text-align: center; user-select: none;
+    }
+    .clinic-option:hover { border-color: var(--primary-mid); background: var(--primary-light); }
+    .clinic-option.selected { border-color: var(--primary); background: var(--primary-light); }
     .clinic-option input[type="radio"] { display: none; }
     .clinic-option-emoji { font-size: 20px; margin-bottom: 4px; }
-    .clinic-option-title { font-size: 13px; font-weight: 700; color: var(--maroon); margin-bottom: 2px; }
-    .clinic-option-sub { font-size: 11px; color: var(--text-light); line-height: 1.4; }
-    .clinic-option.selected .clinic-option-sub { color: var(--maroon-mid); }
+    .clinic-option-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+    .clinic-option-sub { font-size: 11px; color: var(--on-surface-var); line-height: 1.4; }
+    .clinic-option.selected .clinic-option-sub { color: var(--primary-mid); }
 
-    /* BOOKING MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 1000;
+      align-items: center; justify-content: center; padding: 20px;
+    }
     .modal-overlay.active { display: flex; }
-    .modal { background: var(--white); border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .modal-header { background: var(--maroon); color: #fff; padding: 20px 24px; border-radius: 16px 16px 0 0; display: flex; justify-content: space-between; align-items: center; }
-    /* PROGRESS TRACKER */
-    .progress-tracker { display: flex; align-items: center; padding: 20px 24px 0; margin-bottom: -4px; }
-    .progress-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
-    .progress-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; transition: all 0.3s; }
-    .progress-circle.active { background: var(--maroon); color: #fff; }
-    .progress-circle.done { background: var(--maroon); color: #fff; }
-    .progress-circle.inactive { background: #e8f5f4; color: var(--text-light); border: 2px solid var(--border); }
-    .progress-label { font-size: 10px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
-    .progress-label.active { color: var(--maroon); }
-    .progress-line { flex: 1; height: 2px; background: var(--border); margin: 0 6px; margin-bottom: 16px; }
-    .progress-line.done { background: var(--maroon); }
-    .modal-header h3 { font-size: 18px; font-weight: 700; }
+    .modal {
+      background: var(--white); border-radius: 20px; width: 100%;
+      max-width: 500px; max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+    }
+    .modal-header {
+      background: var(--primary); color: #fff; padding: 22px 28px;
+      border-radius: 20px 20px 0 0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-header h3 { font-family: 'Newsreader', serif; font-size: 20px; font-weight: 500; }
     .modal-header p { font-size: 13px; opacity: 0.85; margin-top: 2px; }
-    .modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
-    .modal-body { padding: 24px; }
+    .modal-close {
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      width: 32px; height: 32px; border-radius: 50%;
+      cursor: pointer; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .progress-tracker { display: flex; align-items: center; padding: 18px 28px 0; margin-bottom: -4px; }
+    .progress-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+    .progress-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; transition: all 0.3s;
+    }
+    .progress-circle.active   { background: var(--primary); color: #fff; }
+    .progress-circle.done     { background: var(--primary); color: #fff; }
+    .progress-circle.inactive { background: var(--primary-light); color: var(--on-surface-var); border: 2px solid var(--outline-var); }
+    .progress-label { font-size: 10px; font-weight: 600; color: var(--on-surface-var); text-transform: uppercase; letter-spacing: 0.5px; }
+    .progress-label.active { color: var(--primary); }
+    .progress-line { flex: 1; height: 2px; background: var(--outline-var); margin: 0 6px; margin-bottom: 16px; }
+    .progress-line.done { background: var(--primary); }
+    .modal-body { padding: 22px 28px 28px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-    .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
-    .form-group input:focus, .form-group select:focus { border-color: var(--maroon); }
+    .form-group { margin-bottom: 15px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--on-surface); margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--outline-var); border-radius: var(--r-sm);
+      font-size: 14px; font-family: inherit; outline: none;
+      transition: border-color 0.2s; background: var(--white); color: var(--on-surface);
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
     .phone-input { display: flex; }
-    .phone-prefix { background: var(--maroon); border: 1.5px solid var(--maroon); border-right: none; border-radius: 8px 0 0 8px; padding: 10px 12px; font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; }
-    .phone-input input { border-radius: 0 8px 8px 0 !important; }
-    .modal-submit { width: 100%; background: var(--maroon); color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-    .modal-submit:hover { background: var(--maroon-mid); }
-    .modal-note { font-size: 12px; color: var(--text-light); text-align: center; margin-top: 10px; }
+    .phone-prefix {
+      background: var(--primary); border: 1.5px solid var(--primary);
+      border-right: none; border-radius: var(--r-sm) 0 0 var(--r-sm);
+      padding: 11px 12px; font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap;
+    }
+    .phone-input input { border-radius: 0 var(--r-sm) var(--r-sm) 0 !important; }
+    .modal-submit {
+      width: 100%; background: var(--primary); color: #fff;
+      border: none; padding: 14px; border-radius: var(--r-sm);
+      font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .modal-submit:hover { background: var(--primary-container); }
+    .modal-note { font-size: 12px; color: var(--on-surface-var); text-align: center; margin-top: 10px; }
 
-    /* FLOATING WHATSAPP */
-    .wa-float { position: fixed; bottom: 24px; right: 24px; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.45); z-index: 999; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 60px; height: 60px; background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45); z-index: 999;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
     .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
     .wa-float svg { width: 30px; height: 30px; fill: #fff; }
 
-    /* CTA STRIPS */
-    .cta-strip { padding: 28px 24px; text-align: center; background: var(--maroon-light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .cta-strip p { font-size: 15px; color: var(--text); margin-bottom: 14px; }
-    .cta-strip-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .cta-strip-btn { background: var(--maroon); color: #fff; border: 2px solid var(--maroon); padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
-    .cta-strip-btn:hover { background: var(--maroon-mid); border-color: var(--maroon-mid); }
-    .cta-strip-btn-outline { background: #fff; color: var(--maroon); border: 2px solid var(--maroon); padding: 9px 22px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-block; }
-    .cta-strip-btn-outline:hover { background: var(--maroon-light); }
-
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .why-photo-wrap { max-width: 480px; margin: 0 auto; }
+      .care-cards { grid-template-columns: repeat(2, 1fr); }
+      .quals-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-photo-card { max-width: 320px; margin: 0 auto; }
-      .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+      .sec, .quals-sec, .cond-sec, .contact-sec { padding: 72px 20px; }
+      .care-sec, .quote-sec { padding: 72px 20px; }
+      .cta-outer { padding: 40px 20px; }
+      .cta-card { padding: 48px 28px; border-radius: 20px; }
+      .hero-content { padding: 80px 20px; }
+      .trust-bar { padding: 40px 20px; }
+      .trust-items { gap: 24px; }
+      .cta-strip { padding: 28px 20px; }
+      .nav-inner { padding: 0 20px; }
       .nav-links { display: none; }
-      .top-bar-inner { flex-direction: column; text-align: center; }
+      .care-cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
-      .bento-grid { grid-template-columns: 1fr; }
-      .bento-row2 { grid-template-columns: 1fr; }
-      .philosophy-grid { grid-template-columns: 1fr; }
-      .quote-block { padding: 32px 24px 28px; }
-      .quote-mark { font-size: 80px; }
-      .quote-text { font-size: 17px; }
     }
   </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="top-bar-inner">
-    <span>
-      🏥 <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px;">Arete Hospitals, Gachibowli</a>: 9:00 AM – 4:00 PM
-      &nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px;">Singh's Clinic, Kokapet</a>: 7:00 PM – 9:00 PM
-    </span>
-    <span>Mon – Sat &nbsp;|&nbsp;
-      <a href="https://wa.me/919394580702" target="_blank">+91 93945 80702</a>
-    </span>
-  </div>
-</div>
-
-<!-- NAVBAR -->
-<nav>
+<!-- ── NAV ── -->
+<nav class="topnav">
   <div class="nav-inner">
     <a class="nav-brand" href="/">
-      <div>
-        <div class="nav-brand-text">Dr. Velaga Sirisha</div>
-        <div class="nav-brand-sub">MBBS · DGO · DNB | Sr. Consultant · Obstetrician, OBGYN & Laparoscopic Surgeon</div>
-      </div>
+      Dr. Velaga Sirisha
+      <span class="nav-brand-sub">MBBS · DGO · DNB &nbsp;|&nbsp; Sr. Consultant, Arete Hospitals</span>
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#specialties">Specialities</a></li>
       <li><a href="#conditions">Conditions</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#" class="btn-primary" onclick="openModal(); return false;">Book Appointment</a></li>
     </ul>
+    <button class="nav-cta" onclick="openModal()">Book Appointment</button>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section class="hero" id="home">
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-badge">⭐ <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">Sr. Consultant · Arete Hospitals, West Hyderabad</a></div>
-      <h1>Dr. Velaga Sirisha</h1>
-      <p class="hero-credentials">MBBS · DGO · DNB (Obstetrics & Gynaecology)</p>
-      <div class="role-badges">
-        <span class="role-badge">🔬 Laparoscopic Surgeon</span>
-        <span class="role-badge">🩺 Urogynecologist</span>
-        <span class="role-badge">🌸 Reconstructive Pelvic Surgeon</span>
-        <span class="role-badge">👩‍⚕️ Gynaecologist</span>
-        <span class="role-badge">🤰 Obstetrician</span>
-      </div>
-      <div class="hero-highlights">
-        <div class="highlight-item">
-          <div class="highlight-icon">🏅</div>
-          <div>
-            <span class="highlight-number">9+</span>
-            <span class="highlight-label">Years Experience</span>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">🎓</div>
-          <div>
-            <span class="highlight-number">DNB</span>
-            <span class="highlight-label">Certified</span>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">🔬</div>
-          <div>
-            <span class="highlight-number">2x</span>
-            <span class="highlight-label">Fellowship</span>
-          </div>
-        </div>
-        <div class="highlight-item">
-          <div class="highlight-icon">🗣️</div>
-          <div>
-            <span class="highlight-number">4</span>
-            <span class="highlight-label">Languages</span>
-          </div>
-        </div>
-      </div>
+  <div class="hero-bg">
+    <img src="dr-sirisha.jpg" alt="Dr. Velaga Sirisha – OBGYN & Laparoscopic Surgeon, Arete Hospitals Hyderabad" />
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <span class="hero-badge">⭐ Sr. Consultant · Arete Hospitals, West Hyderabad</span>
+      <h1>Expert Care for Every Stage of Womanhood.</h1>
+      <p class="hero-credentials">Dr. Velaga Sirisha · MBBS · DGO · DNB (Obstetrics &amp; Gynaecology)</p>
+      <p class="hero-sub">Specialized OB-GYN services — from laparoscopic surgery and high-risk pregnancy to urogynecology and reproductive health — delivered with clinical precision and genuine compassion.</p>
       <div class="hero-actions">
-        <button class="hero-btn-primary" onclick="openModal()">📅 Book Appointment</button>
-        <a href="https://wa.me/919394580702" target="_blank" class="hero-btn-secondary">💬 Message on WhatsApp</a>
-      </div>
-    </div>
-    <div class="hero-photo-card">
-      <img src="dr-sirisha.jpg" alt="Dr. Velaga Sirisha – OBGYN & Laparoscopic Surgeon, Arete Hospitals Hyderabad" />
-      <div class="hero-photo-info">
-        <strong>Dr. Velaga Sirisha</strong>
-        <p>Obstetrician · OBGYN · Laparoscopic Surgeon · Urogynecologist</p>
+        <button class="btn-gold" onclick="openModal()">📅 Book Your Consultation</button>
+        <a href="https://wa.me/919394580702" target="_blank" class="hero-link">💬 Message on WhatsApp →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SPECIALTIES -->
-<section class="specialties" id="specialties">
-  <div class="section-inner">
-    <div class="section-tag">Expertise</div>
-    <h2 class="section-title">Areas of Speciality</h2>
-    <p class="section-desc">Comprehensive women's health care with advanced minimally invasive techniques and personalized treatment plans.</p>
-    <div class="bento-grid">
-      <!-- Featured: Laparoscopic Surgery -->
-      <div class="specialty-card featured">
-        <div class="specialty-tag">★ Primary Expertise</div>
-        <div class="specialty-icon">🔬</div>
-        <h3>Laparoscopic Surgery</h3>
-        <p>Advanced minimally invasive procedures — laparoscopic hysterectomy, myomectomy, cystectomy, and diagnostic laparoscopy. DNB-certified with dual fellowship in Advanced Laparoscopic Surgery, delivering faster recovery and minimal scarring.</p>
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <p class="trust-bar-label">Qualifications &amp; Credentials</p>
+    <div class="trust-items">
+      <div class="trust-item">
+        <span class="trust-icon">🎓</span>
+        <span class="trust-text">DNB Certified · OB-GYN</span>
       </div>
-      <!-- Urogynecology -->
-      <div class="specialty-card">
-        <div class="specialty-icon">🩺</div>
-        <h3>Urogynecology</h3>
-        <p>Expert management of pelvic floor disorders including prolapse repair, urinary incontinence, and reconstructive pelvic surgery. Fellowship-trained specialist.</p>
+      <div class="trust-item">
+        <span class="trust-icon">🔬</span>
+        <span class="trust-text">Advanced Laparoscopy Fellow</span>
       </div>
-      <!-- Row 2 -->
-      <div class="bento-row2">
-        <div class="specialty-card">
-          <div class="specialty-icon">🌸</div>
-          <h3>Obstetrics & High-Risk Pregnancy</h3>
-          <p>Complete antenatal, intrapartum, and postnatal care including normal deliveries, C-sections, and high-risk pregnancy management.</p>
-        </div>
-        <div class="specialty-card accent">
-          <div class="specialty-icon">💊</div>
-          <h3>Reproductive Medicine</h3>
-          <p>Infertility workup, PCOS management, endometriosis treatment, and hormonal disorder management for improved reproductive health.</p>
-        </div>
-        <div class="specialty-card">
-          <div class="specialty-icon">🏃‍♀️</div>
-          <h3>Women's Wellness</h3>
-          <p>Preventive gynecology, menopause management, adolescent health, contraception counseling, and annual well-woman exams.</p>
-        </div>
+      <div class="trust-item">
+        <span class="trust-icon">🩺</span>
+        <span class="trust-text">Urogynecology Fellow</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">📖</span>
+        <span class="trust-text">Textbook Contributor</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">⭐</span>
+        <span class="trust-text">9+ Years Experience</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- CTA STRIP: AFTER SPECIALTIES -->
-<div class="cta-strip">
-  <p>Looking for expert women's care in West Hyderabad? Dr. Sirisha is available <strong>Mon–Sat</strong> at Gachibowli &amp; Kokapet.</p>
-  <div class="cta-strip-actions">
-    <button class="cta-strip-btn" onclick="openModal()">📅 Book a Consultation</button>
-    <a href="https://wa.me/919394580702" target="_blank" class="cta-strip-btn-outline">💬 Message on WhatsApp</a>
   </div>
 </div>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-tag">About</div>
-        <h2 class="section-title">Committed to Women's Health</h2>
-        <p>Dr. Velaga Sirisha is a highly accomplished Obstetrician, Gynecologist, Laparoscopic Surgeon, and Urogynecologist. She serves as <strong>Senior Consultant</strong> at <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px;">Arete Hospitals, West Hyderabad</a>. With over 9 years of clinical experience, a DNB from the National Board of Examinations, and dedicated fellowships in both Advanced Laparoscopic Surgery and Urogynecology, she brings specialized surgical expertise to women across Hyderabad.</p>
-        <p>A textbook contributor, Dr. Sirisha is renowned for her compassionate approach and her ability to explain complex medical conditions in simple terms — in Telugu, Hindi, English, or Tamil. She specializes in minimally invasive surgery, ensuring minimal pain and quicker recovery for her patients.</p>
-        <div class="lang-tags" style="margin-top: 24px;">
-          <span style="font-size:13px; font-weight:600; color:var(--text-light); align-self:center;">Speaks:</span>
+<!-- ── ABOUT / WHY ── -->
+<section class="sec" id="about">
+  <div class="sec-inner">
+    <div class="why-grid">
+      <div class="why-photo-wrap">
+        <div class="why-photo-offset"></div>
+        <img src="dr-sirisha.jpg" alt="Dr. Velaga Sirisha – Consultant Obstetrician &amp; Gynecologist, Arete Hospitals" />
+      </div>
+      <div class="why-content">
+        <span class="why-eyebrow">About Dr. Sirisha</span>
+        <h2>A Personal Approach to Expert Women's Medicine</h2>
+        <p>Dr. Velaga Sirisha is a highly accomplished Obstetrician, Gynecologist, Laparoscopic Surgeon, and Urogynecologist serving as Senior Consultant at <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:var(--primary); font-weight:700;">Arete Hospitals, West Hyderabad</a>.</p>
+        <p>With over 9 years of clinical experience, she believes that modern healthcare should be as precise as it is personal — listening first, understanding the narrative behind every patient's journey before crafting a truly tailored plan of care.</p>
+        <ul class="why-bullets">
+          <li class="why-bullet">
+            <span class="why-star">★</span>
+            <span class="why-bullet-text">DNB Certified · National Board of Examinations, New Delhi</span>
+          </li>
+          <li class="why-bullet">
+            <span class="why-star">★</span>
+            <span class="why-bullet-text">Fellowship-trained in Advanced Laparoscopy &amp; Urogynecology</span>
+          </li>
+          <li class="why-bullet">
+            <span class="why-star">★</span>
+            <span class="why-bullet-text">Textbook Contributor · Speaks Telugu, Hindi, English &amp; Tamil</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CARE JOURNEYS / SPECIALITIES ── -->
+<section class="care-sec" id="specialties">
+  <div class="care-header">
+    <h2>Your Care Journey</h2>
+    <p>Comprehensive expertise across every dimension of women's health — from before conception through every stage of life.</p>
+  </div>
+  <div class="care-cards">
+    <!-- Card 1: Obstetrics -->
+    <div class="care-card">
+      <div class="care-img">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKU9dUZ8MZcbspKuUDMHB38Bx9af71W4DhFYHTTa5p_V_hXkhuqEF9DNTj16dUjd1-ee41wvaAMLDAFOU9p6e-3dj7orR3VP52JvGUaSFNZ-T5uC1zi6IJAkhuB0-wnud74Ljg3aFdveMDjp4Hp7Ig_cGfjlpZ9-HyPgNqNpqWJFxrLm6X6Yq_YyUn2YbSSSaTCKnWzuhw8cXiKevdqMaZptMhmTvewrYVSxaIU1cI7Sz9Jvp8SCu5wJYAyAcGBj8brVSoRl7-iOM"
+             alt="Obstetrics and maternity care"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=care-img-icon>🌸</div>';" />
+      </div>
+      <div class="care-body">
+        <span class="care-label">Obstetrics &amp; Maternity</span>
+        <h3>Pregnancy &amp; High-Risk Care</h3>
+        <p>Complete antenatal, intrapartum, and postnatal care including normal deliveries, C-sections, and expert high-risk pregnancy management.</p>
+        <button class="care-link" onclick="openModal()">Book Consultation →</button>
+      </div>
+    </div>
+    <!-- Card 2: Laparoscopic Surgery -->
+    <div class="care-card">
+      <div class="care-img">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzLKJduLNVzt95aGLHUjtVb-9ec0x8rdVUdUwgjxdV0L1HOefIi-hP4UQIy1hu2nEmNB9O0UzCJXKicp1m760oFn3hJJiLpQAgcruW9Hm-dxne3OEnNKRvTYHUaxfO0VAoujfPjnNmKVoaCgUj9hUiMlp-_aIMcqWsFHtbtaKsCg9qImk_zkKzKYPgqiiPEUSLE6h7PcOMgmvku4xKJgTWgEnYsTXbXWpIj1JLBKpiY_eS7uk5FCypeiwGy2RqXU4clT_Zvc4v-UA"
+             alt="Laparoscopic and minimally invasive surgery"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=care-img-icon>🔬</div>';" />
+      </div>
+      <div class="care-body">
+        <span class="care-label">Laparoscopic Surgery</span>
+        <h3>Minimally Invasive Excellence</h3>
+        <p>Advanced laparoscopic hysterectomy, myomectomy, cystectomy, and urogynecological procedures — DNB-certified with dual fellowship training.</p>
+        <button class="care-link" onclick="openModal()">Book Consultation →</button>
+      </div>
+    </div>
+    <!-- Card 3: Reproductive Health -->
+    <div class="care-card">
+      <div class="care-img">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeHz9AaaOUiz-uRzy0iuBtl7g117Hj6pB53AvI2QAzoh75056YCv8dBODlV-5yJMKx0e2ipD0MLdAXhs_KpqB6imv552DzNw4mLiKYAX298ZfRWiSSrF3gi_qJK-d22qcz2PaR40RrZIDLVHB-SzFkuQZ6YunkQ7fdMaFhwu7UXHSxgKQMJADMmOJpdi2wlXarsuivQlNXf3NVPhXwP1tUEzGi41SGMyRR-qz5BcMKHD_QuCc6RtdafRDeqxZrPoH5NZgvmh1b9LQ"
+             alt="Reproductive health, PCOS and wellness"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=care-img-icon>💊</div>';" />
+      </div>
+      <div class="care-body">
+        <span class="care-label">Reproductive Health</span>
+        <h3>Fertility, PCOS &amp; Wellness</h3>
+        <p>Infertility evaluation, PCOS &amp; endometriosis management, menopause care, pelvic floor disorders, and comprehensive well-woman exams.</p>
+        <button class="care-link" onclick="openModal()">Book Consultation →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DR. SIRISHA'S OWN QUOTE ── -->
+<section class="quote-sec">
+  <div class="sec-inner">
+    <div class="quote-inner">
+      <span class="quote-mark">"</span>
+      <blockquote class="quote-text">
+        Medicine is not just about prescriptions and procedures — it is about human connection. In obstetrics and gynaecology, we are privileged to be present at life's most vulnerable and joyous moments. My goal is to ensure every woman feels truly heard, safe, and in expert hands.
+      </blockquote>
+      <cite style="font-style:normal;">
+        <span class="quote-cite-name">Dr. Velaga Sirisha</span>
+        <span class="quote-cite-role">MBBS · DGO · DNB &nbsp;|&nbsp; Senior Consultant, Arete Hospitals, West Hyderabad</span>
+      </cite>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA CARD ── -->
+<div class="cta-outer">
+  <div class="cta-card">
+    <div class="cta-skew"></div>
+    <div class="cta-inner">
+      <h2>Ready to prioritize your health?</h2>
+      <p>Expert women's care across West Hyderabad — available Mon–Sat at Gachibowli &amp; Kokapet. Consultations in Telugu, Hindi, English &amp; Tamil.</p>
+      <button class="btn-gold-lg" onclick="openModal()">Book Your Consultation</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── QUALIFICATIONS ── -->
+<section class="quals-sec">
+  <div class="sec-inner">
+    <div class="quals-grid">
+      <div class="quals-left">
+        <span class="sec-tag">Training &amp; Expertise</span>
+        <h2>Rigorous Credentials, Compassionate Practice</h2>
+        <p>Dr. Velaga Sirisha brings together the highest academic qualifications, specialized fellowship training, and nearly a decade of surgical expertise to provide the best standard of women's healthcare in West Hyderabad.</p>
+        <p>A published textbook contributor known for her warm, approachable manner, she takes pride in explaining complex medical conditions clearly — so every patient can make confident, informed decisions about their own care.</p>
+        <div class="lang-tags">
+          <span class="lang-label">Speaks:</span>
           <span class="lang-tag">🗣️ Telugu</span>
           <span class="lang-tag">🗣️ Hindi</span>
           <span class="lang-tag">🗣️ English</span>
           <span class="lang-tag">🗣️ Tamil</span>
         </div>
       </div>
-      <div>
-        <div class="qualifications">
-          <h3>🎓 Qualifications & Training</h3>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>MBBS</strong>
-              <span>Bachelor of Medicine & Bachelor of Surgery</span>
-            </div>
+      <div class="quals-card">
+        <p class="quals-card-title">🎓 Qualifications &amp; Training</p>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>MBBS</strong>
+            <span>Bachelor of Medicine &amp; Bachelor of Surgery</span>
           </div>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>DGO – Diploma in Gynaecology & Obstetrics</strong>
-              <span>Advanced postgraduate qualification</span>
-            </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>DGO – Diploma in Gynaecology &amp; Obstetrics</strong>
+            <span>Advanced postgraduate qualification</span>
           </div>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>DNB – Obstetrics & Gynaecology</strong>
-              <span>National Board of Examinations, New Delhi</span>
-            </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>DNB – Obstetrics &amp; Gynaecology</strong>
+            <span>National Board of Examinations, New Delhi</span>
           </div>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>Fellowship – Advanced Laparoscopic Surgery</strong>
-              <span>Specialized fellowship in minimally invasive gynecological surgery</span>
-            </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>Fellowship – Advanced Laparoscopic Surgery</strong>
+            <span>Specialized fellowship in minimally invasive gynecological surgery</span>
           </div>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>Fellowship – Urogynecology & Pelvic Reconstructive Surgery</strong>
-              <span>Fellowship training in pelvic floor disorders and reconstructive procedures</span>
-            </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>Fellowship – Urogynecology &amp; Pelvic Reconstructive Surgery</strong>
+            <span>Fellowship training in pelvic floor disorders and reconstructive procedures</span>
           </div>
-          <div class="qual-item">
-            <div class="qual-dot"></div>
-            <div>
-              <strong>Textbook Contributor</strong>
-              <span>Published author in gynecology &amp; obstetrics</span>
-            </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-dot"></div>
+          <div>
+            <strong>Textbook Contributor</strong>
+            <span>Published author in gynecology &amp; obstetrics</span>
           </div>
         </div>
       </div>
@@ -545,50 +1021,14 @@
   </div>
 </section>
 
-<!-- PHILOSOPHY OF CARE + QUOTE -->
-<section class="philosophy">
-  <div class="section-inner">
-    <div style="text-align:center;">
-      <div class="section-tag">Approach</div>
-      <h2 class="section-title">Philosophy of Care</h2>
-      <div style="width:48px; height:3px; background:var(--maroon); border-radius:2px; margin:0 auto 8px;"></div>
-      <p class="section-desc" style="margin:16px auto 0; text-align:center;">Every woman deserves medical care that is both clinically rigorous and deeply human.</p>
+<!-- ── CONDITIONS TREATED ── -->
+<section class="cond-sec" id="conditions">
+  <div class="sec-inner">
+    <div class="cond-header">
+      <span class="sec-tag">Conditions Treated</span>
+      <h2 class="sec-title">What We Treat</h2>
+      <p class="sec-desc">Expert diagnosis and treatment for a comprehensive range of women's health conditions.</p>
     </div>
-    <div class="philosophy-grid">
-      <div class="philosophy-card">
-        <div class="philosophy-icon">🤝</div>
-        <h3>Patient-First</h3>
-        <p>Every woman's journey is unique. Dr. Sirisha listens first — treating the individual behind the symptoms with dignity and deep respect, in the language you're most comfortable in.</p>
-      </div>
-      <div class="philosophy-card">
-        <div class="philosophy-icon">🔬</div>
-        <h3>Evidence-Based Precision</h3>
-        <p>DNB-certified and fellowship-trained, Dr. Sirisha applies the latest minimally invasive techniques — ensuring accurate diagnosis and treatment with faster recovery times.</p>
-      </div>
-      <div class="philosophy-card">
-        <div class="philosophy-icon">💡</div>
-        <h3>Informed Empowerment</h3>
-        <p>Knowledge is the foundation of good decisions. Complex conditions are always explained in clear, simple terms so you can be a confident partner in your own healthcare.</p>
-      </div>
-    </div>
-
-    <!-- Quote Block -->
-    <div class="quote-block">
-      <div class="quote-mark">"</div>
-      <p class="quote-text">
-        Medicine is not just about prescriptions and procedures — it is about human connection. In obstetrics and gynaecology, we are privileged to be present at life's most vulnerable and joyous moments. My goal is to ensure every woman feels truly heard, safe, and in expert hands.
-      </p>
-      <div class="quote-attribution">— Dr. Velaga Sirisha, MBBS · DGO · DNB</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONDITIONS TREATED -->
-<section class="conditions" id="conditions">
-  <div class="section-inner">
-    <div class="section-tag">Conditions Treated</div>
-    <h2 class="section-title">What We Treat</h2>
-    <p class="section-desc">Dr. Sirisha provides expert diagnosis and treatment for a wide range of women's health conditions.</p>
     <div class="conditions-grid">
       <div class="condition-item">PCOS / Ovarian Cysts</div>
       <div class="condition-item">Endometriosis</div>
@@ -610,7 +1050,7 @@
   </div>
 </section>
 
-<!-- CTA STRIP: AFTER CONDITIONS -->
+<!-- ── CTA STRIP ── -->
 <div class="cta-strip">
   <p>Recognised a condition you're dealing with? <strong>Get expert diagnosis and treatment</strong> — book a consultation today.</p>
   <div class="cta-strip-actions">
@@ -619,99 +1059,127 @@
   </div>
 </div>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="section-inner">
-    <div class="section-tag">Get In Touch</div>
-    <h2 class="section-title">Book Your Appointment</h2>
-    <p class="section-desc">Dr. Sirisha is available at two clinic locations across West Hyderabad, Mon–Sat. Message on WhatsApp to confirm your preferred slot and location.</p>
+<!-- ── CONTACT ── -->
+<section class="contact-sec" id="contact">
+  <div class="sec-inner">
+    <span class="sec-tag">Get In Touch</span>
+    <h2 class="sec-title">Book Your Appointment</h2>
+    <p class="sec-desc">Dr. Sirisha is available Mon–Sat at two clinic locations across West Hyderabad. Message on WhatsApp to confirm your preferred slot.</p>
+
     <div class="contact-grid">
-      <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="contact-left">
         <div class="contact-card">
-          <h3>📍 Clinic Locations</h3>
+          <p class="contact-card-title">📍 Clinic Locations</p>
 
           <!-- Morning Clinic -->
-          <div style="padding: 12px 0; border-bottom: 1px solid var(--border);">
-            <div style="font-size: 11px; font-weight: 700; color: var(--maroon); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">🌅 Morning Clinic · Gachibowli</div>
-            <div class="contact-item" style="border: none; padding: 4px 0;">
-              <div class="contact-icon">🏥</div>
+          <div class="clinic-block">
+            <p class="clinic-block-label">🌅 Morning Clinic · Gachibowli</p>
+            <div class="clinic-row">
+              <div class="clinic-icon">🏥</div>
               <div>
-                <div class="contact-label">Sr. Consultant · Hospital</div>
-                <div class="contact-value"><a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:var(--maroon);">Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli</a></div>
+                <div class="clinic-row-label">Hospital</div>
+                <div class="clinic-row-value">
+                  <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener">
+                    Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="contact-item" style="border: none; padding: 4px 0;">
-              <div class="contact-icon">🕐</div>
+            <div class="clinic-row">
+              <div class="clinic-icon">🕐</div>
               <div>
-                <div class="contact-label">Hours</div>
-                <div class="contact-value">Mon – Sat: 9:00 AM – 4:00 PM</div>
+                <div class="clinic-row-label">Hours</div>
+                <div class="clinic-row-value">Mon – Sat &nbsp;|&nbsp; 9:00 AM – 4:00 PM</div>
               </div>
             </div>
           </div>
 
           <!-- Evening Clinic -->
-          <div style="padding: 12px 0; border-bottom: 1px solid var(--border);">
-            <div style="font-size: 11px; font-weight: 700; color: var(--maroon); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">🌆 Evening Clinic · Kokapet</div>
-            <div class="contact-item" style="border: none; padding: 4px 0;">
-              <div class="contact-icon">🏥</div>
+          <div class="clinic-block">
+            <p class="clinic-block-label">🌆 Evening Clinic · Kokapet</p>
+            <div class="clinic-row">
+              <div class="clinic-icon">🏥</div>
               <div>
-                <div class="contact-label">Clinic</div>
-                <div class="contact-value"><a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" style="color:var(--maroon);">Singh's Clinic, Shop 115, Kokapet Terminal,<br/>Gandipet Main Rd, Kokapet, Narsingi – 500 075</a></div>
+                <div class="clinic-row-label">Clinic</div>
+                <div class="clinic-row-value">
+                  <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">
+                    Singh's Clinic, Shop 115, Kokapet Terminal,<br/>Gandipet Main Rd, Kokapet, Narsingi – 500 075
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="contact-item" style="border: none; padding: 4px 0;">
-              <div class="contact-icon">🕐</div>
+            <div class="clinic-row">
+              <div class="clinic-icon">🕐</div>
               <div>
-                <div class="contact-label">Hours</div>
-                <div class="contact-value">Mon – Sat: 7:00 PM – 9:00 PM</div>
+                <div class="clinic-row-label">Hours</div>
+                <div class="clinic-row-value">Mon – Sat &nbsp;|&nbsp; 7:00 PM – 9:00 PM</div>
               </div>
             </div>
           </div>
 
           <!-- WhatsApp -->
-          <div class="contact-item" style="padding: 12px 0; border: none;">
-            <div class="contact-icon">💬</div>
-            <div>
-              <div class="contact-label">WhatsApp</div>
-              <div class="contact-value"><a href="https://wa.me/919394580702" target="_blank">+91 93945 80702</a></div>
+          <div class="clinic-block">
+            <div class="clinic-row">
+              <div class="clinic-icon">💬</div>
+              <div>
+                <div class="clinic-row-label">WhatsApp</div>
+                <div class="clinic-row-value">
+                  <a href="https://wa.me/919394580702" target="_blank">+91 93945 80702</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="book-card-cta">
+
+        <div class="book-cta-card">
           <h3>Ready to Book?</h3>
-          <p>Schedule your appointment with Dr. Sirisha today. Consultation available in Telugu, Hindi, English &amp; Tamil.</p>
-          <button class="hero-btn-primary" onclick="openModal()" style="width:100%; margin-bottom:12px;">📅 Book Appointment Online</button>
-          <a href="https://wa.me/919394580702" target="_blank" style="display:block; background:rgba(255,255,255,0.18); color:#fff; text-align:center; padding:12px; border-radius:8px; text-decoration:none; font-weight:600; border: 2px solid rgba(255,255,255,0.6);">💬 Message on WhatsApp</a>
+          <p>Schedule your appointment today. Consultations in Telugu, Hindi, English &amp; Tamil.</p>
+          <button class="btn-white" onclick="openModal()">📅 Book Appointment Online</button>
+          <a href="https://wa.me/919394580702" target="_blank" class="btn-white-outline">💬 Message on WhatsApp</a>
         </div>
       </div>
-      <div class="map-placeholder">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.4843!2d78.3772!3d17.4435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQXJldGUgSG9zcGl0YWxzLCBHYWNoaWJvd2xp!5e0!3m2!1sen!2sin!4v1"
-          allowfullscreen loading="lazy" title="Arete Hospitals Gachibowli Map">
-        </iframe>
-        <div style="padding: 16px; background: var(--white); border-bottom: 1px solid var(--border);">
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">📍 <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px; font-weight:600;">Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli</a></p>
-          <p style="font-size: 12px; color: var(--text-light); margin-bottom: 10px;">Easily accessible from Gachibowli, Kondapur, Madhapur, HITEC City, Nanakramguda &amp; Financial District</p>
-          <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="display:inline-block; background:var(--maroon); color:#fff; padding:8px 16px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:600;">🗺️ Get Directions</a>
+
+      <div class="contact-right">
+        <div class="map-block">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.4843!2d78.3772!3d17.4435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQXJldGUgSG9zcGl0YWxzLCBHYWNoaWJvd2xp!5e0!3m2!1sen!2sin!4v1"
+            allowfullscreen loading="lazy" title="Arete Hospitals Gachibowli Map">
+          </iframe>
+          <div class="map-caption">
+            <p>📍 <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener">Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli</a></p>
+            <p style="font-size:12px; color:var(--outline); margin-bottom:10px;">Accessible from Gachibowli, Kondapur, Madhapur, HITEC City, Nanakramguda &amp; Financial District</p>
+            <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" class="map-dir-btn">🗺️ Get Directions</a>
+          </div>
         </div>
-        <div style="padding: 16px; background: var(--white);">
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">📍 <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px; font-weight:600;">Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet, Narsingi</a></p>
-          <p style="font-size: 12px; color: var(--text-light); margin-bottom: 10px;">Evening clinic · Mon–Sat, 7:00 PM – 9:00 PM · Accessible from Kokapet, Narsingi, Financial District &amp; Gandipet</p>
-          <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" style="display:inline-block; background:var(--maroon); color:#fff; padding:8px 16px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:600;">🗺️ Get Directions</a>
+        <div class="map-block">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.8!2d78.3289!3d17.4086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zU2luZ2gncyBDbGluaWMsIEtva2FwZXQ!5e0!3m2!1sen!2sin!4v1"
+            allowfullscreen loading="lazy" title="Singh's Clinic Kokapet Map">
+          </iframe>
+          <div class="map-caption">
+            <p>📍 <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet</a></p>
+            <p style="font-size:12px; color:var(--outline); margin-bottom:10px;">Evening clinic · Mon–Sat, 7:00 PM – 9:00 PM · Accessible from Kokapet, Narsingi, Financial District &amp; Gandipet</p>
+            <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" class="map-dir-btn">🗺️ Get Directions</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Dr. Velaga Sirisha</div>
-        <p class="footer-tagline">MBBS · DGO · DNB<br/>Obstetrician · OBGYN · Laparoscopic Surgeon<br/><a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px;">Arete Hospitals, Gachibowli</a> · <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:2px;">Singh's Clinic, Kokapet</a></p>
+        <p class="footer-tagline">
+          MBBS · DGO · DNB<br/>
+          Obstetrician · OBGYN · Laparoscopic Surgeon · Urogynecologist<br/>
+          <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener">Arete Hospitals, Gachibowli</a>
+          &nbsp;·&nbsp;
+          <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">Singh's Clinic, Kokapet</a>
+        </p>
       </div>
       <div>
         <div class="footer-heading">Quick Links</div>
@@ -737,17 +1205,17 @@
     </div>
     <div class="footer-bottom">
       <p>© 2025 Dr. Velaga Sirisha · drsirishaobgyn.com · All rights reserved</p>
-      <p style="margin-top: 4px;">This website is for informational purposes only and does not substitute professional medical advice.</p>
+      <p style="margin-top:5px; opacity:0.7;">This website is for informational purposes only and does not substitute professional medical advice.</p>
     </div>
   </div>
 </footer>
 
-<!-- FLOATING WHATSAPP BUTTON -->
+<!-- ── WHATSAPP FLOAT ── -->
 <a href="https://wa.me/919394580702" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- BOOKING MODAL -->
+<!-- ── BOOKING MODAL ── -->
 <div class="modal-overlay" id="bookingModal">
   <div class="modal">
     <div class="modal-header">
@@ -757,7 +1225,6 @@
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <!-- PROGRESS TRACKER -->
     <div class="progress-tracker">
       <div class="progress-step">
         <div class="progress-circle active">1</div>
@@ -766,7 +1233,7 @@
       <div class="progress-line"></div>
       <div class="progress-step">
         <div class="progress-circle inactive">2</div>
-        <div class="progress-label">Date & Time</div>
+        <div class="progress-label">Date &amp; Time</div>
       </div>
       <div class="progress-line"></div>
       <div class="progress-step">
@@ -774,7 +1241,6 @@
         <div class="progress-label">Confirm</div>
       </div>
     </div>
-
     <div class="modal-body">
       <form id="bookingForm" onsubmit="submitBooking(event)">
         <div class="form-group">
@@ -811,7 +1277,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="contact">Contact Number *</label>
+          <label for="contactPhone">Contact Number *</label>
           <div class="phone-input">
             <span class="phone-prefix">+91</span>
             <input type="tel" id="contactPhone" placeholder="9876543210" pattern="[0-9]{10}" maxlength="10" required />
@@ -848,8 +1314,8 @@
   };
 
   const CLINIC_INFO = {
-    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli', name: 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli' },
-    singh: { label: "Dr. Velaga Sirisha · Singh's Clinic, Kokapet",      name: "Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet, Narsingi" }
+    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli',   name: 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli' },
+    singh: { label: "Dr. Velaga Sirisha · Singh's Clinic, Kokapet",        name: "Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet, Narsingi" }
   };
 
   var selectedClinic = 'arete';
@@ -859,7 +1325,6 @@
     document.getElementById('clinicOptArete').classList.toggle('selected', clinic === 'arete');
     document.getElementById('clinicOptSingh').classList.toggle('selected', clinic === 'singh');
     document.getElementById('modalClinicLabel').textContent = CLINIC_INFO[clinic].label;
-
     var sel = document.getElementById('apptTime');
     sel.innerHTML = '<option value="">Select time</option>';
     CLINIC_TIMES[clinic].forEach(function(t) {
@@ -870,11 +1335,10 @@
     clearDateTimeError();
   }
 
-  // Progress tracker step update
   function updateProgress(step) {
     var circles = document.querySelectorAll('.progress-circle');
-    var labels = document.querySelectorAll('.progress-label');
-    var lines = document.querySelectorAll('.progress-line');
+    var labels  = document.querySelectorAll('.progress-label');
+    var lines   = document.querySelectorAll('.progress-line');
     circles.forEach(function(c, i) {
       c.className = 'progress-circle ' + (i < step ? 'done' : i === step ? 'active' : 'inactive');
     });
@@ -887,7 +1351,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date().toISOString().split('T')[0];
+    var today = new Date().toISOString().split('T')[0];
     document.getElementById('apptDate').setAttribute('min', today);
     document.getElementById('apptDate').addEventListener('change', function() {
       clearDateTimeError();
@@ -896,7 +1360,7 @@
     document.getElementById('apptTime').addEventListener('change', function() {
       if (this.value) updateProgress(2);
     });
-    selectClinic('arete'); // populate default times
+    selectClinic('arete');
   });
 
   function clearDateTimeError() {
@@ -932,13 +1396,13 @@
 
   function submitBooking(e) {
     e.preventDefault();
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName  = document.getElementById('lastName').value.trim();
-    const age       = document.getElementById('age').value;
-    const contact   = '+91' + document.getElementById('contactPhone').value.trim();
-    const date      = document.getElementById('apptDate').value;
-    const time      = document.getElementById('apptTime').value;
-    const clinic    = CLINIC_INFO[selectedClinic].name;
+    var firstName = document.getElementById('firstName').value.trim();
+    var lastName  = document.getElementById('lastName').value.trim();
+    var age       = document.getElementById('age').value;
+    var contact   = '+91' + document.getElementById('contactPhone').value.trim();
+    var date      = document.getElementById('apptDate').value;
+    var time      = document.getElementById('apptTime').value;
+    var clinic    = CLINIC_INFO[selectedClinic].name;
 
     var apptDT = parseApptDateTime(date, time);
     var minDT  = new Date(Date.now() + 2 * 60 * 60 * 1000);
@@ -951,7 +1415,7 @@
       fetch(GOOGLE_SHEET_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, age, contact, clinic, date, time })
+        body: JSON.stringify({ firstName: firstName, lastName: lastName, age: age, contact: contact, clinic: clinic, date: date, time: time })
       }).catch(function() {});
     }
 

@@ -949,7 +949,7 @@
     <div class="cta-skew"></div>
     <div class="cta-inner">
       <h2>Ready to prioritize your health?</h2>
-      <p>Expert women's care across West Hyderabad — available Mon–Sat at Gachibowli &amp; Kokapet. Consultations in Telugu, Hindi, English &amp; Tamil.</p>
+      <p>Expert women's care across West Hyderabad — available Mon–Sat at Gachibowli. Consultations in Telugu, Hindi, English &amp; Tamil.</p>
       <button class="btn-gold-lg" onclick="openModal()">Book Your Consultation</button>
     </div>
   </div>
@@ -1094,29 +1094,6 @@
             </div>
           </div>
 
-          <!-- Evening Clinic -->
-          <div class="clinic-block">
-            <p class="clinic-block-label">🌆 Evening Clinic · Kokapet</p>
-            <div class="clinic-row">
-              <div class="clinic-icon">🏥</div>
-              <div>
-                <div class="clinic-row-label">Clinic</div>
-                <div class="clinic-row-value">
-                  <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">
-                    Singh's Clinic, Shop 115, Kokapet Terminal,<br/>Gandipet Main Rd, Kokapet, Narsingi – 500 075
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="clinic-row">
-              <div class="clinic-icon">🕐</div>
-              <div>
-                <div class="clinic-row-label">Hours</div>
-                <div class="clinic-row-value">Mon – Sat &nbsp;|&nbsp; 7:00 PM – 9:00 PM</div>
-              </div>
-            </div>
-          </div>
-
           <!-- WhatsApp -->
           <div class="clinic-block">
             <div class="clinic-row">
@@ -1151,17 +1128,6 @@
             <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener" class="map-dir-btn">🗺️ Get Directions</a>
           </div>
         </div>
-        <div class="map-block">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.8!2d78.3289!3d17.4086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zU2luZ2gncyBDbGluaWMsIEtva2FwZXQ!5e0!3m2!1sen!2sin!4v1"
-            allowfullscreen loading="lazy" title="Singh's Clinic Kokapet Map">
-          </iframe>
-          <div class="map-caption">
-            <p>📍 <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet</a></p>
-            <p style="font-size:12px; color:var(--outline); margin-bottom:10px;">Evening clinic · Mon–Sat, 7:00 PM – 9:00 PM · Accessible from Kokapet, Narsingi, Financial District &amp; Gandipet</p>
-            <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener" class="map-dir-btn">🗺️ Get Directions</a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -1177,8 +1143,6 @@
           MBBS · DGO · DNB<br/>
           Obstetrician · OBGYN · Laparoscopic Surgeon · Urogynecologist<br/>
           <a href="https://maps.google.com/?q=Arete+Hospitals,+Opp.+Biodiversity+Flyover,+Gachibowli,+Hyderabad" target="_blank" rel="noopener">Arete Hospitals, Gachibowli</a>
-          &nbsp;·&nbsp;
-          <a href="https://maps.google.com/?q=Shop+115,+Kokapet+Terminal,+Gandipet+Main+Rd,+Kokapet,+Narsingi,+Hyderabad,+Telangana+500075" target="_blank" rel="noopener">Singh's Clinic, Kokapet</a>
         </p>
       </div>
       <div>
@@ -1252,12 +1216,6 @@
               <div class="clinic-option-title">Morning Clinic</div>
               <div class="clinic-option-sub">Arete Hospitals, Gachibowli<br/>9:00 AM – 4:00 PM</div>
             </label>
-            <label class="clinic-option" id="clinicOptSingh" onclick="selectClinic('singh')">
-              <input type="radio" name="clinic" value="singh" />
-              <div class="clinic-option-emoji">🌆</div>
-              <div class="clinic-option-title">Evening Clinic</div>
-              <div class="clinic-option-sub">Singh's Clinic, Kokapet<br/>7:00 PM – 9:00 PM</div>
-            </label>
           </div>
         </div>
         <div class="form-row">
@@ -1310,12 +1268,10 @@
     arete: ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM',
             '12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM',
             '3:00 PM','3:30 PM','4:00 PM'],
-    singh: ['7:00 PM','7:30 PM','8:00 PM','8:30 PM','9:00 PM']
   };
 
   const CLINIC_INFO = {
-    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli',   name: 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli' },
-    singh: { label: "Dr. Velaga Sirisha · Singh's Clinic, Kokapet",        name: "Singh's Clinic, Shop 115, Kokapet Terminal, Gandipet Main Rd, Kokapet, Narsingi" }
+    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli',   name: 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli' }
   };
 
   var selectedClinic = 'arete';
@@ -1323,7 +1279,6 @@
   function selectClinic(clinic) {
     selectedClinic = clinic;
     document.getElementById('clinicOptArete').classList.toggle('selected', clinic === 'arete');
-    document.getElementById('clinicOptSingh').classList.toggle('selected', clinic === 'singh');
     document.getElementById('modalClinicLabel').textContent = CLINIC_INFO[clinic].label;
     var sel = document.getElementById('apptTime');
     sel.innerHTML = '<option value="">Select time</option>';

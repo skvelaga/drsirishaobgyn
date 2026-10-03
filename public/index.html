@@ -656,19 +656,14 @@
     }
 
     /* ── BOOKING MODAL ── */
-    .clinic-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
-    .clinic-option {
-      border: 2px solid var(--outline-var); border-radius: var(--r-sm);
-      padding: 12px 10px; cursor: pointer; transition: all 0.2s;
-      text-align: center; user-select: none;
+    .clinic-info-banner {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--primary-light); border: 1.5px solid var(--outline-var);
+      border-radius: var(--r-md); padding: 14px 16px;
     }
-    .clinic-option:hover { border-color: var(--primary-mid); background: var(--primary-light); }
-    .clinic-option.selected { border-color: var(--primary); background: var(--primary-light); }
-    .clinic-option input[type="radio"] { display: none; }
-    .clinic-option-emoji { font-size: 20px; margin-bottom: 4px; }
-    .clinic-option-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
-    .clinic-option-sub { font-size: 11px; color: var(--on-surface-var); line-height: 1.4; }
-    .clinic-option.selected .clinic-option-sub { color: var(--primary-mid); }
+    .clinic-info-icon { font-size: 24px; flex-shrink: 0; }
+    .clinic-info-name { font-size: 14px; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .clinic-info-meta { font-size: 12px; color: var(--on-surface-var); margin-top: 2px; }
 
     .modal-overlay {
       display: none; position: fixed; inset: 0;
@@ -1071,9 +1066,8 @@
         <div class="contact-card">
           <p class="contact-card-title">📍 Clinic Locations</p>
 
-          <!-- Morning Clinic -->
+          <!-- Clinic -->
           <div class="clinic-block">
-            <p class="clinic-block-label">🌅 Morning Clinic · Gachibowli</p>
             <div class="clinic-row">
               <div class="clinic-icon">🏥</div>
               <div>
@@ -1208,14 +1202,13 @@
     <div class="modal-body">
       <form id="bookingForm" onsubmit="submitBooking(event)">
         <div class="form-group">
-          <label>Choose Clinic *</label>
-          <div class="clinic-selector">
-            <label class="clinic-option selected" id="clinicOptArete" onclick="selectClinic('arete')">
-              <input type="radio" name="clinic" value="arete" checked />
-              <div class="clinic-option-emoji">🌅</div>
-              <div class="clinic-option-title">Morning Clinic</div>
-              <div class="clinic-option-sub">Arete Hospitals, Gachibowli<br/>9:00 AM – 4:00 PM</div>
-            </label>
+          <label>Location</label>
+          <div class="clinic-info-banner">
+            <div class="clinic-info-icon">🏥</div>
+            <div>
+              <div class="clinic-info-name">Arete Hospitals, Gachibowli</div>
+              <div class="clinic-info-meta">Opp. Biodiversity Flyover &nbsp;·&nbsp; Mon–Sat, 9:00 AM – 4:00 PM</div>
+            </div>
           </div>
         </div>
         <div class="form-row">
@@ -1264,30 +1257,17 @@
 <script>
   const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
-  const CLINIC_TIMES = {
-    arete: ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM',
-            '12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM',
-            '3:00 PM','3:30 PM','4:00 PM'],
-  };
+  const ARETE_TIMES = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM',
+    '12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM'];
 
-  const CLINIC_INFO = {
-    arete: { label: 'Dr. Velaga Sirisha · Arete Hospitals, Gachibowli',   name: 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli' }
-  };
-
-  var selectedClinic = 'arete';
-
-  function selectClinic(clinic) {
-    selectedClinic = clinic;
-    document.getElementById('clinicOptArete').classList.toggle('selected', clinic === 'arete');
-    document.getElementById('modalClinicLabel').textContent = CLINIC_INFO[clinic].label;
+  function populateTimes() {
     var sel = document.getElementById('apptTime');
     sel.innerHTML = '<option value="">Select time</option>';
-    CLINIC_TIMES[clinic].forEach(function(t) {
+    ARETE_TIMES.forEach(function(t) {
       var opt = document.createElement('option');
       opt.value = t; opt.textContent = t;
       sel.appendChild(opt);
     });
-    clearDateTimeError();
   }
 
   function updateProgress(step) {
@@ -1338,6 +1318,7 @@
   function openModal() {
     document.getElementById('bookingModal').classList.add('active');
     document.body.style.overflow = 'hidden';
+    populateTimes();
   }
 
   function closeModal() {
@@ -1357,7 +1338,7 @@
     var contact   = '+91' + document.getElementById('contactPhone').value.trim();
     var date      = document.getElementById('apptDate').value;
     var time      = document.getElementById('apptTime').value;
-    var clinic    = CLINIC_INFO[selectedClinic].name;
+    var clinic    = 'Arete Hospitals, Opp. Biodiversity Flyover, Gachibowli';
 
     var apptDT = parseApptDateTime(date, time);
     var minDT  = new Date(Date.now() + 2 * 60 * 60 * 1000);

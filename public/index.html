@@ -744,6 +744,190 @@
     .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
     .wa-float svg { width: 30px; height: 30px; fill: #fff; }
 
+    /* ── HERO TRUST PILLS ── */
+    .hero-trust-pills {
+      display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px;
+    }
+    .hero-trust-pills span {
+      font-size: 12px; font-weight: 600; color: var(--on-surface-var);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hero-trust-pills span::before {
+      content: '✓'; font-size: 11px; font-weight: 800;
+      color: var(--primary); background: rgba(0,77,72,0.1);
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { background: var(--primary); padding: 56px 36px; }
+    .stats-strip-inner {
+      max-width: var(--container); margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.14);
+      padding: 8px 24px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(40px, 4.5vw, 58px);
+      font-weight: 600; color: var(--gold);
+      line-height: 1; display: block; margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.72);
+      line-height: 1.5;
+    }
+
+    /* ── PROCESS / HOW IT WORKS ── */
+    .process-sec { padding: 100px 36px; background: var(--surface); }
+    .process-inner { max-width: 940px; margin: 0 auto; }
+    .process-header { text-align: center; margin-bottom: 64px; }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 36px;
+      left: calc(16.67% + 8px); right: calc(16.67% + 8px);
+      height: 2px;
+      background: linear-gradient(to right, var(--gold-mid), var(--gold-mid));
+      z-index: 0;
+    }
+    .process-step { text-align: center; position: relative; z-index: 1; padding: 0 20px; }
+    .process-step-num {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--white); border: 3px solid var(--gold-mid);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 22px;
+      font-family: 'Newsreader', serif; font-size: 28px;
+      font-weight: 600; color: var(--primary);
+      box-shadow: 0 4px 20px rgba(0,77,72,0.1);
+    }
+    .process-step-title {
+      font-family: 'Newsreader', serif;
+      font-size: 20px; font-weight: 500; color: var(--primary);
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .process-step-desc {
+      font-size: 14px; color: var(--on-surface-var);
+      line-height: 1.7;
+    }
+
+    /* ── FAQ ── */
+    .faq-sec { background: var(--surface-low); padding: 100px 36px; }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 52px; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--outline-var);
+      border-radius: var(--r-md); overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .faq-item.open { box-shadow: 0 4px 20px rgba(0,77,72,0.08); }
+    .faq-q {
+      width: 100%; padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: none; border: none; cursor: pointer; text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 600; color: var(--on-surface);
+      gap: 16px; transition: background 0.15s;
+    }
+    .faq-q:hover { background: var(--primary-light); }
+    .faq-item.open .faq-q { color: var(--primary); background: var(--primary-light); }
+    .faq-icon {
+      font-size: 22px; flex-shrink: 0; color: var(--primary);
+      font-weight: 300; transition: transform 0.25s;
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
+    .faq-item.open .faq-a { max-height: 320px; }
+    .faq-a-inner {
+      padding: 16px 24px 22px;
+      border-top: 1px solid var(--outline-var);
+      font-size: 14px; line-height: 1.8; color: var(--on-surface-var);
+    }
+
+    /* ── MOBILE NAV ── */
+    .nav-hamburger {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 8px;
+      flex-direction: column; gap: 5px;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--primary); border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .mobile-nav-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35); z-index: 190;
+    }
+    .mobile-nav-overlay.active { display: block; }
+    .mobile-nav {
+      position: fixed; top: 72px; left: 0; right: 0; z-index: 195;
+      background: var(--white);
+      border-bottom: 1px solid var(--outline-var);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      padding: 20px 24px 28px;
+      display: none;
+    }
+    .mobile-nav.active { display: block; }
+    .mobile-nav ul { list-style: none; margin-bottom: 18px; }
+    .mobile-nav ul li a {
+      display: block;
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 22px; color: var(--on-surface);
+      text-decoration: none; padding: 12px 4px;
+      border-bottom: 1px solid var(--outline-var);
+      transition: color 0.2s;
+    }
+    .mobile-nav ul li:last-child a { border-bottom: none; }
+    .mobile-nav ul li a:hover { color: var(--primary); }
+    .mobile-nav-book {
+      display: block; width: 100%;
+      background: var(--gold); color: var(--gold-dark);
+      text-align: center; padding: 15px;
+      border-radius: var(--r-full); font-weight: 700;
+      font-size: 14px; text-decoration: none;
+      border: none; cursor: pointer;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* ── WHATSAPP PULSE ── */
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+      55% { box-shadow: 0 4px 30px rgba(37,211,102,0.8), 0 0 0 10px rgba(37,211,102,0.1); }
+    }
+    .wa-float { animation: wa-pulse 3s ease-in-out infinite; }
+    .wa-float:hover { animation: none; transform: scale(1.12); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    .wa-tooltip {
+      position: absolute; right: 72px; top: 50%;
+      transform: translateY(-50%);
+      background: #1a1a1a; color: #fff;
+      font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: var(--r-full);
+      white-space: nowrap; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .why-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -756,6 +940,7 @@
     @media (max-width: 768px) {
       .sec, .quals-sec, .cond-sec, .contact-sec { padding: 72px 20px; }
       .care-sec, .quote-sec { padding: 72px 20px; }
+      .process-sec, .faq-sec { padding: 72px 20px; }
       .cta-outer { padding: 40px 20px; }
       .cta-card { padding: 48px 28px; border-radius: 20px; }
       .hero-content { padding: 80px 20px; }
@@ -764,9 +949,17 @@
       .cta-strip { padding: 28px 20px; }
       .nav-inner { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .care-cards { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
+      .stats-strip { padding: 40px 20px; }
+      .stats-strip-inner { grid-template-columns: 1fr 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 20px 12px; }
+      .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.12); }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+      .process-steps { grid-template-columns: 1fr; gap: 36px; }
+      .process-steps::before { display: none; }
     }
   </style>
 </head>
@@ -786,8 +979,23 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="openModal()">Book Appointment</button>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="toggleMobileNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="#about" onclick="toggleMobileNav()">About</a></li>
+    <li><a href="#specialties" onclick="toggleMobileNav()">Specialities</a></li>
+    <li><a href="#conditions" onclick="toggleMobileNav()">Conditions</a></li>
+    <li><a href="#contact" onclick="toggleMobileNav()">Contact</a></li>
+  </ul>
+  <button class="mobile-nav-book" onclick="toggleMobileNav(); openModal();">📅 Book Appointment</button>
+</div>
 
 <!-- ── HERO ── -->
 <section class="hero" id="home">
@@ -805,6 +1013,11 @@
         <button class="btn-gold" onclick="openModal()">📅 Book Your Consultation</button>
         <a href="https://wa.me/919394580702" target="_blank" class="hero-link">💬 Message on WhatsApp →</a>
       </div>
+      <p class="hero-trust-pills">
+        <span>DNB Certified</span>
+        <span>9+ Years Experience</span>
+        <span>Telugu · Hindi · English · Tamil</span>
+      </p>
     </div>
   </div>
 </section>
@@ -834,6 +1047,28 @@
         <span class="trust-icon">⭐</span>
         <span class="trust-text">9+ Years Experience</span>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-item reveal">
+      <span class="stat-number">9<span style="font-size:0.6em">+</span></span>
+      <div class="stat-label">Years of Clinical<br/>Experience</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <span class="stat-number">2</span>
+      <div class="stat-label">Specialized<br/>Fellowships</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <span class="stat-number">4</span>
+      <div class="stat-label">Languages<br/>Spoken</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <span class="stat-number">6</span>
+      <div class="stat-label">Days Available<br/>Each Week</div>
     </div>
   </div>
 </div>
@@ -1054,12 +1289,40 @@
   </div>
 </div>
 
+<!-- ── HOW IT WORKS ── -->
+<section class="process-sec">
+  <div class="process-inner">
+    <div class="process-header reveal">
+      <span class="sec-tag">Your Visit</span>
+      <h2 class="sec-title">How to Book an Appointment</h2>
+      <p class="sec-desc">Simple, quick, and completely on your schedule.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="process-step-num">1</div>
+        <div class="process-step-title">Book Online or on WhatsApp</div>
+        <div class="process-step-desc">Use the booking form on this page or send a WhatsApp message to <strong>+91 93945 80702</strong> with your name and preferred date.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-step-num">2</div>
+        <div class="process-step-title">Receive Confirmation</div>
+        <div class="process-step-desc">Our team confirms your slot and sends you the appointment details — usually within a few hours during clinic hours.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-step-num">3</div>
+        <div class="process-step-title">Your Consultation</div>
+        <div class="process-step-desc">Visit Arete Hospitals, Gachibowli. Bring any prior reports. Expect a thorough, unhurried consultation in your preferred language.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONTACT ── -->
 <section class="contact-sec" id="contact">
   <div class="sec-inner">
     <span class="sec-tag">Get In Touch</span>
     <h2 class="sec-title">Book Your Appointment</h2>
-    <p class="sec-desc">Dr. Sirisha is available Mon–Sat at two clinic locations across West Hyderabad. Message on WhatsApp to confirm your preferred slot.</p>
+    <p class="sec-desc">Dr. Sirisha is available Mon–Sat at Arete Hospitals, Gachibowli. Book online or message on WhatsApp to confirm your preferred slot.</p>
 
     <div class="contact-grid">
       <div class="contact-left">
@@ -1127,6 +1390,61 @@
   </div>
 </section>
 
+<!-- ── FAQ ── -->
+<section class="faq-sec">
+  <div class="faq-inner">
+    <div class="faq-header reveal">
+      <span class="sec-tag">Frequently Asked</span>
+      <h2 class="sec-title">Common Questions</h2>
+      <p class="sec-desc">Everything you need to know before your first visit.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          How do I book an appointment with Dr. Sirisha?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">You can book online using the form on this page, or simply send a WhatsApp message to <strong>+91 93945 80702</strong>. Our team confirms your slot within a few hours during clinic hours (Mon–Sat, 9 AM–4 PM).</div></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What should I bring for my first consultation?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Bring any prior medical reports, prescriptions, ultrasound scans, or lab results. If you are pregnant, bring your antenatal card. For new patients, a valid photo ID is helpful. Arriving 10 minutes early helps with registration.</div></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Does Dr. Sirisha handle high-risk pregnancies?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Dr. Sirisha is experienced in managing high-risk pregnancies including gestational diabetes, hypertension in pregnancy (pre-eclampsia), multiple gestation, placenta previa, and previous caesarean deliveries. She provides close, personalised monitoring throughout.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What laparoscopic procedures are performed at Arete Hospitals?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Dr. Sirisha performs advanced laparoscopic surgeries including hysterectomy, myomectomy (fibroid removal), ovarian cystectomy, diagnostic laparoscopy, and urogynecological procedures such as pelvic floor repair. Arete Hospitals is fully equipped for minimally invasive gynecological procedures.</div></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What payment modes are accepted?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Arete Hospitals accepts Cash, UPI (GPay, PhonePe, Paytm), and credit/debit cards. For insurance queries, please contact Arete Hospitals directly or call ahead to confirm your coverage before your visit.</div></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Can Dr. Sirisha consult in Telugu or Tamil?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely. Dr. Sirisha consults fluently in <strong>Telugu, Hindi, English, and Tamil</strong> — ensuring clear, comfortable communication no matter your language preference.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
@@ -1162,14 +1480,15 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Dr. Velaga Sirisha · drsirishaobgyn.com · All rights reserved</p>
+      <p>© 2025–2026 Dr. Velaga Sirisha · drsirishaobgyn.com · All rights reserved</p>
       <p style="margin-top:5px; opacity:0.7;">This website is for informational purposes only and does not substitute professional medical advice.</p>
     </div>
   </div>
 </footer>
 
 <!-- ── WHATSAPP FLOAT ── -->
-<a href="https://wa.me/919394580702" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
+<a href="https://wa.me/919394580702" target="_blank" class="wa-float" aria-label="Chat on WhatsApp" style="position:relative;">
+  <span class="wa-tooltip">Chat with us</span>
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -1186,7 +1505,7 @@
     <div class="progress-tracker">
       <div class="progress-step">
         <div class="progress-circle active">1</div>
-        <div class="progress-label active">Clinic</div>
+        <div class="progress-label active">Details</div>
       </div>
       <div class="progress-line"></div>
       <div class="progress-step">
@@ -1367,9 +1686,38 @@
     );
     closeModal();
     document.getElementById('bookingForm').reset();
-    selectClinic('arete');
     window.open('https://wa.me/919394580702?text=' + msg, '_blank');
   }
+
+  /* ── MOBILE NAV ── */
+  function toggleMobileNav() {
+    var nav = document.getElementById('mobileNav');
+    var overlay = document.getElementById('mobileNavOverlay');
+    var open = nav.classList.toggle('active');
+    overlay.classList.toggle('active', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  /* ── FAQ ACCORDION ── */
+  function toggleFAQ(btn) {
+    var item = btn.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  /* ── SCROLL REVEAL ── */
+  (function() {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+  })();
 </script>
 
 </body>
